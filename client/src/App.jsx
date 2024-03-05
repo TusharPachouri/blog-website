@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("https://blog-website-sigma-olive.vercel.app/")
+      .get(`${import.meta.env.VITE_REACT_APP_HOST}/`)
       .then((response) => {
         setData(response.data);
       })
