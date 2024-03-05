@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/")
+      .get("http://blog-website-sigma-olive.vercel.app/")
       .then((response) => {
         setData(response.data);
       })
