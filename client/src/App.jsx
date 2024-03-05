@@ -8,7 +8,7 @@ function App() {
   // const [data, setData] = useState(null);
 
   
-    const data = fetch("http://localhost:8080/")
+    const data = fetch("https://blog-website-sigma-olive.vercel.app/")
       .then((response) => response.json())
       .catch((error) => console.error("Error:", error));
   

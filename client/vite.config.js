@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server:{
     proxy:{
-      "/":'http://localhost:8080'
+      "/":'https://blog-website-sigma-olive.vercel.app/'
     }
   }
 })
