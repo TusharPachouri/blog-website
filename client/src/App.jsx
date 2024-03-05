@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://blog-website-sigma-olive.vercel.app/")
+      .get("https://blog-website-sigma-olive.vercel.app/")
       .then((response) => {
         setData(response.data);
       })
