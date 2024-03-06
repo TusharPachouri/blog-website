@@ -17,11 +17,11 @@ app.use(function (req, res, next) {
 });
 // app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", async (req, res) => {
-  res.json({
-    message: "Saiful Islam",
-  });
-});
+// app.get("/", async (req, res) => {
+//   res.json({
+//     message: "Saiful Islam",
+//   });
+// });
 
 app.use(
   cors({
@@ -37,5 +37,7 @@ app.use(
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
+
+
 
 export { app };
