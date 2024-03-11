@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Logout from "./Logout";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -54,48 +55,72 @@ const Profile = () => {
     fetchUserPosts();
   }, []);
 
+  const handleDeletePost = async (postId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/posts/delete/${postId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        // Remove the deleted post from the userPosts array
+        setUserPosts(userPosts.filter((post) => post._id !== postId));
+        console.log("Post deleted successfully");
+      } else {
+        console.error("Failed to delete post");
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
+
   return (
-    <div className="profile-container bg-gray-100 h-screen flex justify-center items-center">
-      {userData && (
-        <div className="max-w-lg rounded overflow-hidden shadow-lg">
-          <div
-            className="profile-cover w-full h-48 bg-cover bg-center"
-            style={{ backgroundImage: `url(${userData.coverImage})` }}
-          ></div>
-          <div className="px-6 py-4">
-            <div className="profile-avatar flex justify-center">
-              <img
-                className="w-32 h-32 rounded-full border-4 border-white"
-                src={userData.avatar}
-                alt="Avatar"
-              />
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-xl mb-2">
-                <b>Name: </b> {userData.fullName}
+    <div className="profile-container bg-gray-100 min-h-screen flex flex-col">
+      {/* User Details */}
+      <div className="bg-white py-8">
+        {userData && (
+          <div className="max-w-lg mx-auto rounded overflow-hidden shadow-lg">
+            <div
+              className="profile-cover w-full h-48 bg-cover bg-center"
+              style={{ backgroundImage: `url(${userData.coverImage})` }}
+            ></div>
+            <div className="px-6 py-4">
+              <div className="profile-avatar flex justify-center">
+                <img
+                  className="w-32 h-32 rounded-full border-4 border-white"
+                  src={userData.avatar}
+                  alt="Avatar"
+                />
               </div>
-              <p className="text-gray-700 text-base">
-                <b>Email: </b>
-                {userData.email}
-              </p>
-              <p className="text-gray-700 text-base">
-                <b>Username:</b> {userData.username}
-              </p>
+              <div className="text-center">
+                <div className="font-bold text-xl mb-2">
+                  <b>Name: </b> {userData.fullName}
+                </div>
+                <p className="text-gray-700 text-base">
+                  <b>Email: </b>
+                  {userData.email}
+                </p>
+                <p className="text-gray-700 text-base">
+                  <b>Username:</b> {userData.username}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* Render user's posts */}
-      <div className="mt-8">
+      {/* User Posts */}
+      <div className="container mx-auto py-8">
         <h2 className="text-2xl font-semibold mb-4">
           <b>My Posts: </b>
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 relative">
           {userPosts.map((post) => (
             <div
               key={post._id}
-              className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden"
+              className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden relative"
             >
               <img
                 className="w-full h-64 object-cover"
@@ -113,10 +138,19 @@ const Profile = () => {
                   <b>Content:</b> {post.content}
                 </p>
               </div>
+              {/* Delete post button */}
+              <button
+                onClick={() => handleDeletePost(post._id)}
+                className="absolute bottom-0 right-2 bg-red-500 text-white py-1 px-4 rounded-full"
+              >
+                Delete
+              </button>
             </div>
           ))}
         </div>
       </div>
+
+      <Logout />
     </div>
   );
 };
