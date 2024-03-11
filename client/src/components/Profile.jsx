@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import Logout from "./Logout";
+import backgroundImage from "../assets/img/backgroundImage.jpg"; // Replace this with the path to your background image
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
-    // Fetch user data from the API
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/v1/users/user",
+          `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user`,
           {
             method: "GET",
             credentials: "include",
@@ -31,7 +31,6 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch user's posts from the API
     const fetchUserPosts = async () => {
       try {
         const response = await fetch(
@@ -65,7 +64,6 @@ const Profile = () => {
         }
       );
       if (response.ok) {
-        // Remove the deleted post from the userPosts array
         setUserPosts(userPosts.filter((post) => post._id !== postId));
         console.log("Post deleted successfully");
       } else {
@@ -77,9 +75,12 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile-container bg-gray-100 min-h-screen flex flex-col">
+    <div
+      className="profile-container min-h-screen flex flex-col bg-cover"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       {/* User Details */}
-      <div className="bg-white py-8">
+      <div className="bg-white py-8" >
         {userData && (
           <div className="max-w-lg mx-auto rounded overflow-hidden shadow-lg">
             <div
@@ -113,7 +114,7 @@ const Profile = () => {
 
       {/* User Posts */}
       <div className="container mx-auto py-8">
-        <h2 className="text-2xl font-semibold mb-4">
+        <h2 className="text-2xl font-semibold text-white mb-4">
           <b>My Posts: </b>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 relative">
@@ -132,25 +133,27 @@ const Profile = () => {
                   {post.title}
                 </h1>
                 <h2 className="text-sm text-gray-600 mb-2">
-                  <b> By:</b> {post.owner.username}
+                  <b>By:</b> {post.owner.username}
                 </h2>
-                <p className="text-gray-700">
+                <p className="text-gray-700 mb-4">
                   <b>Content:</b> {post.content}
                 </p>
+                <button
+                  onClick={() => handleDeletePost(post._id)}
+                  className="bg-red-500 text-white py-1 px-2 rounded-md text-sm"
+                >
+                  Delete
+                </button>
               </div>
-              {/* Delete post button */}
-              <button
-                onClick={() => handleDeletePost(post._id)}
-                className="absolute bottom-0 right-2 bg-red-500 text-white py-1 px-4 rounded-full"
-              >
-                Delete
-              </button>
             </div>
           ))}
         </div>
       </div>
 
-      <Logout />
+      {/* Logout Button */}
+      <div className="fixed bottom-4 right-4">
+        <Logout />
+      </div>
     </div>
   );
 };

@@ -1,7 +1,15 @@
 const Contact = () => {
   return (
-    <div className="bg-gradient-to-r from-pink-500 to-red-500 min-h-screen flex justify-center items-center">
-      <div className="w-full max-w-md rounded-lg overflow-hidden shadow-lg bg-white">
+    <div
+      className="min-h-screen flex justify-center items-center"
+      style={{
+        backgroundImage:
+          "url('https://source.unsplash.com/random/1920x1080/?dark,nature')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="w-full max-w-md rounded-lg overflow-hidden shadow-lg bg-black bg-opacity-75 pt-10">
         <div className="flex justify-between bg-gray-800 text-white p-4">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -15,72 +23,74 @@ const Contact = () => {
           </div>
         </div>
         <div className="p-6">
-          <h1 className="text-3xl font-bold text-center mb-4">CONTACT US</h1>
-          <p className="text-center text-gray-600 mb-8">
-            CONTACT INFO : +62 81 314 928 595
+          <h1 className="text-3xl font-bold text-center mb-4 text-white">
+            CONTACT US
+          </h1>
+          <p className="text-center text-gray-400 mb-8">
+            CONTACT INFO : +91 82 18 054 473
           </p>
           <form className="space-y-4">
             <div className="flex flex-col">
               <label
                 htmlFor="name"
-                className="text-sm font-medium text-gray-700"
+                className="text-sm font-medium text-gray-300"
               >
                 Name
               </label>
               <input
                 type="text"
                 id="name"
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500"
+                className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-800 text-gray-300 focus:outline-none focus:border-gray-500"
               />
             </div>
             <div className="flex flex-col">
               <label
                 htmlFor="email"
-                className="text-sm font-medium text-gray-700"
+                className="text-sm font-medium text-gray-300"
               >
                 Email
               </label>
               <input
                 type="email"
                 id="email"
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500"
+                className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-800 text-gray-300 focus:outline-none focus:border-gray-500"
               />
             </div>
             <div className="flex flex-col">
               <label
                 htmlFor="contact"
-                className="text-sm font-medium text-gray-700"
+                className="text-sm font-medium text-gray-300"
               >
                 Contact No
               </label>
               <input
                 type="text"
                 id="contact"
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500"
+                className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-800 text-gray-300 focus:outline-none focus:border-gray-500"
               />
             </div>
             <div className="flex flex-col">
               <label
                 htmlFor="message"
-                className="text-sm font-medium text-gray-700"
+                className="text-sm font-medium text-gray-300"
               >
                 Message
               </label>
               <textarea
                 id="message"
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500"
+                className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-800 text-gray-300 focus:outline-none focus:border-gray-500 h-32"
               ></textarea>
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-end space-x-4">
               <button
                 type="button"
-                className="px-6 py-2 bg-gray-800 text-white rounded-lg"
+                className="px-6 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition duration-300"
               >
                 CANCEL
               </button>
               <button
                 type="submit"
-                className="px-6 py-2 bg-pink-500 text-white rounded-lg"
+                className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition duration-300"
               >
                 SEND
               </button>
