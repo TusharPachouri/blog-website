@@ -28,6 +28,7 @@ const Login = () => {
         },
         body: JSON.stringify(formData),
       });
+      console.log(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/login`)
 
       const data = await response.json();
 

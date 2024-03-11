@@ -15,10 +15,12 @@ const Profile = () => {
       if (response.ok) {
         // Clear any local storage, state, or context related to authentication
         // Redirect the user to the login page or any other page
-        navigate("/login");
+        navigate("/");
+        // Reload the page
+        window.location.reload();
       } else {
         console.error("Failed to log out");
-      }
+      } 
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -26,8 +28,12 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      {/* Your profile content here */}
-      <button onClick={handleLogout}>Logout</button>
+      <button
+        onClick={handleLogout}
+        className="bg-red-500 text-white py-2 px-4 rounded-md"
+      >
+        Logout
+      </button>
     </div>
   );
 };
