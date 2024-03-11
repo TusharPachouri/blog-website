@@ -16,8 +16,8 @@ app.use(function (req, res, next) {
 app.use(
   cors({
     origin:
-      "http://localhost:5173" ||
-      "https://blog-website-client-9h5nwa80k-tushar-pachouris-projects.vercel.app/" || "*", // Update with your frontend origin
+      // "http://localhost:5173" ||
+      "https://blog-website-95cv.vercel.app/", // Update with your frontend origin
     credentials: true, // Allow credentials
   })
 );
