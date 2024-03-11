@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 const Posts = () => {
+  // console.log(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts`)
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -10,8 +11,9 @@ const Posts = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts`);
+      // console.log(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts`)
       const data = await response.json();
-      if (data.success) {
+      if (response.ok) {
         setPosts(data.data.posts);
       } else {
         console.error("Error fetching data:", data.message);

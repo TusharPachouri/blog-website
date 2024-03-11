@@ -12,13 +12,28 @@ const app = express();
 //   );
 //   next();
 // });
-
-app.use(
-  cors({
-    origin: ["*"],
-    credentials: true,
-  })
-);
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://blog-website-alpha-ten.vercel.app/"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
+// app.use(
+//   cors({
+//     origin: ["*"],
+//     credentials: true,
+//   })
+// );
 app.use(
   express.json({
     limit: "16kb",
