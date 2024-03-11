@@ -1,26 +1,89 @@
-// import './App.css';
-import Nav from './components/Nav';
-import SignUp from './components/SignUp';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Nav from "./components/Nav";
+import SignUp from "./components/SignUp";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import Contact from "./components/Contact";
+import Profile from "./components/Profile";
+import Logout from "./components/Logout";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    // Perform login logic and set isLoggedIn to true
+
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    // Perform logout logic and set isLoggedIn to false
+    setIsLoggedIn(false);
+  };
   return (
     <div className="App">
       <BrowserRouter>
         <Nav />
         <Routes>
-          <Route path='/' element={<h1>Home</h1>} />
-          <Route path='/about' element={<h1>about</h1>} />
-          <Route path='/contact' element={<h1>contact</h1>} />
-          <Route path='/logout' element={<h1>logout component here</h1>} />
-          <Route path='/profile' element={<h1>profile component here</h1>} />
-          <Route path='/signup' element={<SignUp />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<h1>About</h1>} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
-      </BrowserRouter> 
+      </BrowserRouter>
       {/* <Footer /> */}
-
     </div>
   );
 }
 
 export default App;
+// import Nav from "./components/Nav";
+// import SignUp from "./components/SignUp";
+// import Login from "./components/Login";
+// import Home from "./components/Home";
+// import Contact from "./components/Contact";
+// import Profile from "./components/Profile";
+// import Logout from "./components/Logout";
+// import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+// import { useState } from "react";
+
+// function App() {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+//   const handleLogin = () => {
+//     // Perform login logic and set isLoggedIn to true
+//     setIsLoggedIn(true);
+//   };
+
+//   const handleLogout = () => {
+//     // Perform logout logic and set isLoggedIn to false
+//     setIsLoggedIn(false);
+//   };
+
+//   return (
+//     <div className="App">
+//       <BrowserRouter>
+//         <Nav isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+//         <Routes>
+//           <Route path="/" element={<Home />} />
+//           <Route path="/about" element={<h1>About</h1>} />
+//           <Route path="/contact" element={<Contact />} />
+//           <Route path="/login" element={<Login onLogin={handleLogin} />} />
+//           <Route path="/signup" element={<SignUp />} />
+//           {isLoggedIn ? (
+//             <Route path="/profile" element={<Profile />} />
+//           ) : (
+//             <Navigate to="/login" />
+//           )}
+//           <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
+//         </Routes>
+//       </BrowserRouter>
+//     </div>
+//   );
+// }
+
+// export default App;

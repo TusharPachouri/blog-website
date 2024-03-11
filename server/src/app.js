@@ -15,11 +15,10 @@ app.use(function (req, res, next) {
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
+    origin: "http://localhost:5173" || "https://blog-website-95cv.vercel.app", // Update with your frontend origin
+    credentials: true, // Allow credentials
   })
 );
-
 app.use(
   express.json({
     limit: "16kb",
