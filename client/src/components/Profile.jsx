@@ -10,13 +10,10 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(
-          `/api/v1/users/user/`,
-          {
-            method: "GET",
-            credentials: "include", // todo
-          }
-        );
+        const response = await fetch(`/api/v1/users/user/`, {
+          method: "GET",
+          credentials: "include", // todo
+        });
         if (response.ok) {
           const userData = await response.json();
           setUserData(userData.data);
@@ -34,13 +31,10 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
-        const response = await fetch(
-          `/api/v1/posts/user`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`/api/v1/posts/user`, {
+          method: "GET",
+          credentials: "include",
+        });
         if (response.ok) {
           const postData = await response.json();
           setUserPosts(postData.data.posts);
@@ -57,13 +51,10 @@ const Profile = () => {
 
   const handleDeletePost = async (postId) => {
     try {
-      const response = await fetch(
-        `/api/v1/posts/delete/${postId}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/v1/posts/delete/${postId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
       if (response.ok) {
         setUserPosts(userPosts.filter((post) => post._id !== postId));
         console.log("Post deleted successfully");
@@ -127,49 +118,55 @@ const Profile = () => {
 
       {/* User Posts */}
       <div className="container mx-auto py-8">
-        <h2 className="text-2xl font-semibold text-white mb-4">
-          <b>My Posts: </b>
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 relative">
-          {userPosts.map((post) => (
-            <div
-              key={post._id}
-              className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden relative"
+  <h2 className="text-2xl font-semibold text-white mb-4">
+    <b>My Posts: </b>
+  </h2>
+
+  <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 relative">
+    {userPosts.map((post) => (
+      <div
+        key={post._id}
+        className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden relative"
+      >
+        <div className="relative">
+          <img
+            className="w-full h-64 object-cover"
+            src={post.postImage}
+            alt={post.title}
+          />
+          <div
+            className="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+          >
+            <Link
+              to={`/post/${post._id}`}
+              className="bg-white text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-200 transition-colors duration-300"
             >
-              <img
-                className="w-full h-64 object-cover"
-                src={post.postImage}
-                alt={post.title}
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                <Link
-                  to={`/post/${post._id}`}
-                  className="bg-white text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-200 transition-colors duration-300"
-                >
-                  Read More
-                </Link>
-              </div>
-              <div className="p-4">
-                <h1 className="text-xl font-semibold text-gray-800 mb-2">
-                  {post.title}
-                </h1>
-                <h2 className="text-sm text-gray-600 mb-2">
-                  <b>By:</b> {post.owner.username}
-                </h2>
-                <p className="text-gray-700 mb-4">
-                  <b>Content:</b> {post.content}
-                </p>
-                <button
-                  onClick={() => handleDeletePost(post._id)}
-                  className="bg-red-500 text-white py-1 px-2 rounded-md text-sm"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))}
+              Read More
+            </Link>
+          </div>
+        </div>
+
+        <div className="p-4">
+          <h1 className="text-xl font-semibold text-gray-800 mb-2">
+            {post.title}
+          </h1>
+          <h2 className="text-sm text-gray-600 mb-2">
+            <b>By:</b> {post.owner.username}
+          </h2>
+          <p className="text-gray-700 mb-4">
+            <b>Content:</b> {post.content}
+          </p>
+          <button
+            onClick={() => handleDeletePost(post._id)}
+            className="bg-red-500 text-white py-1 px-2 rounded-md text-sm"
+          >
+            Delete
+          </button>
         </div>
       </div>
+    ))}
+  </div>
+</div>
 
       {/* Logout Button */}
       <div className="fixed bottom-4 right-4">
