@@ -47,7 +47,10 @@ const registerUser = asyncHandler(async (req, res) => {
   }
   if (!avatarLocalPath) throw new ApiError(400, "Avatar is required");
   const avatar = await uploadOnCloudinary(avatarLocalPath, "avatar");
-  const coverImage = await uploadOnCloudinary(coverImageLocalPath, "coverImage");
+  const coverImage = await uploadOnCloudinary(
+    coverImageLocalPath,
+    "coverImage"
+  );
 
   const user = await User.create({
     username: username.toLowerCase(),
@@ -85,7 +88,7 @@ const loginUser = asyncHandler(async (req, res) => {
   );
   const options = {
     httpOnly: true,
-    secure: true,
+    // secure: true,
   };
   res
     .status(200)
@@ -145,7 +148,7 @@ const refreshUserToken = asyncHandler(async (req, res) => {
   );
   const options = {
     httpOnly: true,
-    secure: true,
+    // secure: true,
   };
   res
     .status(200)
@@ -193,8 +196,8 @@ const deleteCurrentUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (!user) throw new ApiError(404, "User not found");
   await User.findByIdAndDelete(req.user._id);
-  await deleteFromCloudinary(user.avatar,"image", "avatar");
-  await deleteFromCloudinary(user.coverImage,"image", "coverImage");
+  await deleteFromCloudinary(user.avatar, "image", "avatar");
+  await deleteFromCloudinary(user.coverImage, "image", "coverImage");
   res.status(200).json(new ApiResponse(200, {}, "User deleted successfully"));
 });
 
@@ -206,5 +209,5 @@ export {
   changeCurrentPassword,
   getCurrentUser,
   getUserById,
-  deleteCurrentUser
+  deleteCurrentUser,
 };

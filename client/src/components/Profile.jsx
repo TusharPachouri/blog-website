@@ -11,10 +11,10 @@ const Profile = () => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          `/api/v1/users/user`,
+          `/api/v1/users/user/`,
           {
             method: "GET",
-            credentials: "include",
+            credentials: "include", // todo
           }
         );
         if (response.ok) {

@@ -11,7 +11,7 @@ const Home = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await fetch(
-          `/api/v1/users/user`,
+          `/api/v1/users/user`,   // todo: here
           {
             method: "GET",
             credentials: "include", // Include credentials for authentication (cookies)

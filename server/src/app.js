@@ -39,7 +39,7 @@ app.use(
     //   "X-Requested-With,content-type, Authorization, x-auth-token",
   })
 );
-// app.options("*", cors());
+app.options("*", cors());
 
 app.use(
   express.json({
