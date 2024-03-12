@@ -17,7 +17,7 @@ const Contact = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/contacts/`,
+        `/api/v1/contacts/`,
         formData
       );
       console.log(response.data); // Assuming you want to log the response

@@ -34,7 +34,7 @@ const SignUp = () => {
     try {
       setLoading(true); // Set loading to true when the form is submitted
       const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/register`,
+        `/api/v1/users/register`,
         {
           method: "POST",
           body: formDataToSend,
@@ -44,7 +44,7 @@ const SignUp = () => {
       if (response.ok) {
         // Registration successful, proceed with login
         const loginResponse = await fetch(
-          `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/login`,
+          `/api/v1/users/login`,
           {
             method: "POST",
             headers: {
