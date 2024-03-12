@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   server: {
     proxy: {
-      "/api": "https://blog-website-server-gray.vercel.app",
+      "/api": "https://blog-website-server-two.vercel.app",
     },
   },
   plugins: [react()],
