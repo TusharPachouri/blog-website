@@ -35,15 +35,17 @@ const Login = () => {
           body: JSON.stringify(formData),
         }
       );
+      console.log(response);
 
       const data = await response.json();
 
       if (response.ok) {
         document.cookie = `accessToken=${data.data.accessToken}; path=/`;
         document.cookie = `refreshToken=${data.data.refreshToken}; path=/`;
+        console.log(data.data.accessToken, data.data.refreshToken);
 
         // Redirect to home page
-        window.location.href = "/";
+        // window.location.href = "/";
       } else {
         setErrorMessage(data.message); // Set error message from response data
       }

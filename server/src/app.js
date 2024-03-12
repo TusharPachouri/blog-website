@@ -29,7 +29,7 @@ app.use(
     ],
     credentials: true,
     methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
-    allowedHeaders: "X-Requested-With,content-type",
+    allowedHeaders: "X-Requested-With,content-type, Authorization, x-auth-token",
   })
 );
 // app.options("*", cors());
