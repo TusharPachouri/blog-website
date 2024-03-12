@@ -40,6 +40,7 @@ const CreatePost = () => {
           method: "POST",
           body: formDataToSend,
           credentials: "include",
+          
         }
       );
 

@@ -29,9 +29,9 @@ const Login = () => {
         {
           method: "POST",
           credentials: "include", // Include credentials for authentication (cookies)
-          headers: {
-            "Content-Type": "application/json",
-          },
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
           body: JSON.stringify(formData),
         }
       );
