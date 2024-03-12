@@ -20,7 +20,7 @@ const Home = () => {
         const data = await response.json();
 
         if (response.ok) {
-          if (data && data.data && data.data.user) {
+          if (data && data.data) {
             setLoggedIn(true);
           } else {
             console.error("User details not found in response data:", data);

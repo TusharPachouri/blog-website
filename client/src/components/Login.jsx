@@ -45,7 +45,7 @@ const Login = () => {
         console.log(data.data.accessToken, data.data.refreshToken);
 
         // Redirect to home page
-        // window.location.href = "/";
+        window.location.href = "/";
       } else {
         setErrorMessage(data.message); // Set error message from response data
       }
