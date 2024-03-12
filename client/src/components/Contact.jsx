@@ -1,4 +1,39 @@
+import { useState } from "react";
+import axios from "axios";
+
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    contactNumber: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/contacts/`,
+        formData
+      );
+      console.log(response.data); // Assuming you want to log the response
+      // Clear form fields after successful submission
+      setFormData({
+        name: "",
+        email: "",
+        contactNumber: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      // Handle error display or other actions
+    }
+  };
+
   return (
     <div
       className="min-h-screen flex justify-center items-center"
@@ -29,7 +64,7 @@ const Contact = () => {
           <p className="text-center text-gray-400 mb-8">
             CONTACT INFO : +91 82 18 054 473
           </p>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="flex flex-col">
               <label
                 htmlFor="name"
@@ -41,6 +76,8 @@ const Contact = () => {
                 type="text"
                 id="name"
                 className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-800 text-gray-300 focus:outline-none focus:border-gray-500"
+                value={formData.name}
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
@@ -54,19 +91,23 @@ const Contact = () => {
                 type="email"
                 id="email"
                 className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-800 text-gray-300 focus:outline-none focus:border-gray-500"
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
               <label
-                htmlFor="contact"
+                htmlFor="contactNumber"
                 className="text-sm font-medium text-gray-300"
               >
                 Contact No
               </label>
               <input
                 type="text"
-                id="contact"
+                id="contactNumber"
                 className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-800 text-gray-300 focus:outline-none focus:border-gray-500"
+                value={formData.contactNumber}
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
@@ -79,6 +120,8 @@ const Contact = () => {
               <textarea
                 id="message"
                 className="px-4 py-2 border border-gray-600 rounded-lg bg-gray-800 text-gray-300 focus:outline-none focus:border-gray-500 h-32"
+                value={formData.message}
+                onChange={handleChange}
               ></textarea>
             </div>
             <div className="flex justify-end space-x-4">

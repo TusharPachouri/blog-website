@@ -31,13 +31,15 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className="bg-gray-800 p-4 flex justify-between items-center">
-      <div>{/* Your logo */}</div>
-      <ul className="flex space-x-4">
+    <nav className="bg-gray-800 py-4 md:flex md:justify-between md:items-center">
+      <div className="mx-4 md:mx-0">
+        {/* Your logo */}
+      </div>
+      <ul className="flex flex-col md:flex-row md:space-x-4 mx-4 md:mx-0">
         <li>
           <Link
             to="/"
-            className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600"
+            className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600 block md:inline-block mb-2 md:mb-0"
           >
             Home
           </Link>
@@ -45,7 +47,7 @@ const Nav = () => {
         <li>
           <Link
             to="/about"
-            className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600"
+            className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600 block md:inline-block mb-2 md:mb-0"
           >
             About Us
           </Link>
@@ -53,7 +55,7 @@ const Nav = () => {
         <li>
           <Link
             to="/contact"
-            className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600"
+            className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600 block md:inline-block mb-2 md:mb-0"
           >
             Contact
           </Link>
@@ -62,7 +64,7 @@ const Nav = () => {
           <li>
             <Link
               to="/profile"
-              className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600"
+              className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600 block md:inline-block mb-2 md:mb-0"
             >
               Profile
             </Link>
@@ -73,7 +75,7 @@ const Nav = () => {
             <li>
               <Link
                 to="/login"
-                className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600"
+                className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600 block md:inline-block mb-2 md:mb-0"
               >
                 Login
               </Link>
@@ -81,7 +83,7 @@ const Nav = () => {
             <li>
               <Link
                 to="/signup"
-                className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600"
+                className="text-white hover:text-gray-300 rounded-md px-3 py-2 bg-gray-700 hover:bg-gray-600 block md:inline-block mb-2 md:mb-0"
               >
                 Sign Up
               </Link>

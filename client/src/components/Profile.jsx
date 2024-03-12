@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Logout from "./Logout";
 import backgroundImage from "../assets/img/backgroundImage.jpg"; // Replace this with the path to your background image
 
@@ -34,7 +35,7 @@ const Profile = () => {
     const fetchUserPosts = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/v1/posts/user",
+          `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/user`,
           {
             method: "GET",
             credentials: "include",
@@ -57,7 +58,7 @@ const Profile = () => {
   const handleDeletePost = async (postId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/posts/delete/${postId}`,
+        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/delete/${postId}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -80,30 +81,42 @@ const Profile = () => {
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* User Details */}
-      <div className="bg-white py-8" >
+      <div className="bg-100 rounded-xl py-8 px-4 relative">
         {userData && (
-          <div className="max-w-lg mx-auto rounded overflow-hidden shadow-lg">
+          <div className="max-w-lg mx-auto rounded overflow-hidden shadow-lg bg-black relative">
             <div
-              className="profile-cover w-full h-48 bg-cover bg-center"
+              className="profile-cover w-full h-48 bg-cover bg-center relative"
               style={{ backgroundImage: `url(${userData.coverImage})` }}
-            ></div>
-            <div className="px-6 py-4">
-              <div className="profile-avatar flex justify-center">
+            >
+              <div className="absolute left-0 top-0 h-full w-1/2">
+                {/* Empty div to create space for the avatar */}
+              </div>
+              <div className="absolute top-1/2 transform -translate-y-.2 ml-50">
                 <img
                   className="w-32 h-32 rounded-full border-4 border-white"
                   src={userData.avatar}
                   alt="Avatar"
                 />
               </div>
+            </div>
+            <div className="px-6 py-4">
               <div className="text-center">
-                <div className="font-bold text-xl mb-2">
-                  <b>Name: </b> {userData.fullName}
+                <div className="font-bold text-white text-xl mb-2 text-glossy  ">
+                  <b>Name: </b>{" "}
+                  {userData.fullName
+                    .split(" ")
+                    .map(
+                      (word) =>
+                        word.charAt(0).toUpperCase() +
+                        word.slice(1).toLowerCase()
+                    )
+                    .join(" ")}
                 </div>
-                <p className="text-gray-700 text-base">
+                <p className="  text-white text-base text-glossy">
                   <b>Email: </b>
                   {userData.email}
                 </p>
-                <p className="text-gray-700 text-base">
+                <p className=" text-white text-base text-glossy">
                   <b>Username:</b> {userData.username}
                 </p>
               </div>
@@ -128,6 +141,14 @@ const Profile = () => {
                 src={post.postImage}
                 alt={post.title}
               />
+              <div className="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                <Link
+                  to={`/post/${post._id}`}
+                  className="bg-white text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-200 transition-colors duration-300"
+                >
+                  Read More
+                </Link>
+              </div>
               <div className="p-4">
                 <h1 className="text-xl font-semibold text-gray-800 mb-2">
                   {post.title}

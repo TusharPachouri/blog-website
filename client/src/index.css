@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-glossy {
+    text-shadow: 0 0 8px rgba(255,255,255,0.8);
+  }

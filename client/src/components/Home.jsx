@@ -1,12 +1,13 @@
 import Posts from "./Post";
 import CreatePost from "./CreatePost";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import background from "../assets/img/backgroundImage.jpg";
 
-function Home() {
+const Home = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isCreatePostVisible, setIsCreatePostVisible] = useState(false);
 
   useEffect(() => {
-    // Function to fetch user details from the backend API
     const fetchUserDetails = async () => {
       try {
         const response = await fetch(
@@ -31,20 +32,53 @@ function Home() {
     fetchUserDetails();
   }, []);
 
+  const handleCreatePostClick = () => {
+    setIsCreatePostVisible(true);
+  };
+
+  const handleCancelClick = () => {
+    setIsCreatePostVisible(false);
+  };
+
   return (
     <>
-      {loggedIn && (
-        <>
-          <h1 className="text-3xl font-bold mb-4 text-red-600">
-            Create a New Post:{" "}
-          </h1>
-          <CreatePost />
-        </>
-      )}
-      <h1 className="text-3xl font-bold mb-4 text-red-600">Recent Posts: </h1>
-      <Posts />
+      <div
+        className="flex flex-col items-center justify-center"
+        style={{ backgroundImage: `url(${background})` }}
+      >
+        {loggedIn && (
+          <>
+            <h1 className="font-bold text-red-700 text-5xl mb-2 text-glossy ">
+              Create a New Post{" "}
+            </h1>
+            {isCreatePostVisible ? (
+              <div>
+                <CreatePost />
+                <button
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                  onClick={handleCancelClick}
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                onClick={handleCreatePostClick}
+              >
+                Create Post
+              </button>
+            )}
+          </>
+        )}
+        <h1 className="font-bold text-red-700 text-5xl mb-2 text-glossy ">
+          Posts{" "}
+        </h1>
+        <Posts />
+      </div>
     </>
   );
-}
+};
 
 export default Home;
