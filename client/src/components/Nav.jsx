@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 const Nav = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -9,14 +8,15 @@ const Nav = () => {
     // Function to fetch user details from the backend API
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(
+        const response = await fetch(
           `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user`,
           {
-            withCredentials: true, // Include credentials for authentication (cookies)
+            method: "GET",
+            credentials: "include", // Include credentials for authentication (cookies)
           }
         );
-        const data = response.data;
-        if (response.status === 200 && data.success) {
+        const data = await response.json();
+        if (response.ok && data.success) {
           setLoggedIn(true);
         } else {
           setLoggedIn(false);
@@ -32,7 +32,9 @@ const Nav = () => {
 
   return (
     <nav className="bg-gray-800 py-4 md:flex md:justify-between md:items-center">
-      <div className="mx-4 md:mx-0">{/* Your logo */}</div>
+      <div className="mx-4 md:mx-0">
+        {/* Your logo */}
+      </div>
       <ul className="flex flex-col md:flex-row md:space-x-4 mx-4 md:mx-0">
         <li>
           <Link
@@ -58,7 +60,7 @@ const Nav = () => {
             Contact
           </Link>
         </li>
-        {loggedIn && (
+        { loggedIn && (
           <li>
             <Link
               to="/profile"

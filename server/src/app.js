@@ -24,12 +24,16 @@ app.use(
   cors({
     origin: [
       "*",
-      "https://blog-website-alpha-ten.vercel.app",
+      "https://blog-website-alpha-ten.vercel.app/",
       "http://localhost:5173",
+      "https://blog-website-tushar-pachouris-projects.vercel.app/",
+      "https://vercel.com/tushar-pachouris-projects/blog-website/DTYHxjoaSAcRuEJVAWgwHXFDLKu4",
+      "https://blog-website-5qclhd8po-tushar-pachouris-projects.vercel.app/",
     ],
     credentials: true,
     methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
-    allowedHeaders: "X-Requested-With,content-type, Authorization, x-auth-token",
+    allowedHeaders:
+      "X-Requested-With,content-type, Authorization, x-auth-token",
   })
 );
 // app.options("*", cors());
