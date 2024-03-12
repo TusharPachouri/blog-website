@@ -60,7 +60,7 @@ const Nav = () => {
             Contact
           </Link>
         </li>
-        {loggedIn && (
+        { (
           <li>
             <Link
               to="/profile"

@@ -18,9 +18,16 @@ const Home = () => {
           }
         );
         const data = await response.json();
-        if (response.ok && data.success) {
-          setLoggedIn(true);
+
+        if (response.ok) {
+          if (data && data.data && data.data.user) {
+            setLoggedIn(true);
+          } else {
+            console.error("User details not found in response data:", data);
+            setLoggedIn(false);
+          }
         } else {
+          console.error("Response not OK:", response);
           setLoggedIn(false);
         }
       } catch (error) {
@@ -30,7 +37,7 @@ const Home = () => {
     };
 
     fetchUserDetails();
-  }, []);
+  }, []); // Empty dependency array to run once on component mount
 
   const handleCreatePostClick = () => {
     setIsCreatePostVisible(true);
