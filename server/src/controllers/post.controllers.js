@@ -66,7 +66,10 @@ const getLoggedInUserAllPosts = asyncHandler(async (req, res) => {
 const getPostById = asyncHandler(async (req, res) => {
   const { postId } = req.params;
   if (!postId) throw new ApiError(400, "Post Id is required");
-  const post = await Post.findById(postId).populate("owner", "username avatar");
+  const post = await Post.findById(postId).populate(
+    "owner",
+    "username avatar fullName"
+  );
   if (!post) throw new ApiError(404, "Post not found");
   res.status(200).json(new ApiResponse(200, { post }, "Post found"));
 });

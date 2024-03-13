@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       // "/api": "http://localhost:8080",
-      "/api": "https://blog-website-server-two.vercel.app/",
+      "/api  ": "ht  tps://blog-website-server-two.vercel.app/",
     },
   },
   plugins: [react()],

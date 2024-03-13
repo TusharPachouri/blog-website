@@ -1,4 +1,4 @@
-import Posts from "./Post";
+import Posts from "./Posts";
 import CreatePost from "./CreatePost";
 import { useState, useEffect } from "react";
 import background from "../assets/img/backgroundImage.jpg";

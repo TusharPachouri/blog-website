@@ -40,17 +40,14 @@ const CreatePost = () => {
           method: "POST",
           body: formDataToSend,
           credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
         }
       );
 
       if (!response.ok) {
         const data = await response.json();
-
         throw new Error(data.message);
       }
+
       window.location.href = "/";
       // Post created successfully
       // Handle redirection to another page or display a success message

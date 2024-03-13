@@ -20,34 +20,34 @@ const app = express();
 //     credentials: true,
 //   })
 // );
-app.use(
-  cors({
-    origin: [
-      "*",
-      "https://blog-website-alpha-ten.vercel.app/",
-      "https://blog-website-alpha-ten.vercel.app/login",
-      "https://blog-website-alpha-ten.vercel.app/profile",
-      "https://blog-website-alpha-ten.vercel.app",
-      "http://localhost:5173",
-      "https://blog-website-tushar-pachouris-projects.vercel.app/",
-      "https://vercel.com/tushar-pachouris-projects/blog-website/DTYHxjoaSAcRuEJVAWgwHXFDLKu4",
-      "https://blog-website-5qclhd8po-tushar-pachouris-projects.vercel.app/",
-    ],
-    credentials: true,
-    methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
-    // allowedHeaders:
-    //   "X-Requested-With,content-type, Authorization, x-auth-token",
-  })
-);
+// app.use(
+//   cors({
+//     origin: [
+//       "*",
+//       "https://blog-website-alpha-ten.vercel.app/",
+//       "https://blog-website-alpha-ten.vercel.app/login",
+//       "https://blog-website-alpha-ten.vercel.app/profile",
+//       "https://blog-website-alpha-ten.vercel.app",
+//       "http://localhost:5173",
+//       "https://blog-website-tushar-pachouris-projects.vercel.app/",
+//       "https://vercel.com/tushar-pachouris-projects/blog-website/DTYHxjoaSAcRuEJVAWgwHXFDLKu4",
+//       "https://blog-website-5qclhd8po-tushar-pachouris-projects.vercel.app/",
+//     ],
+//     credentials: true,
+//     methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+//     // allowedHeaders:
+//     //   "X-Requested-With,content-type, Authorization, x-auth-token",
+//   })
+// );
 app.options("*", cors());
 
 app.use(
   express.json({
-    limit: "16kb",
+    limit: "50mb",
   })
 );
 
-app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 

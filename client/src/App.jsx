@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Contact from "./components/Contact";
 import Profile from "./components/Profile";
 import AboutUs from "./components/AboutUs";
+import Post from "./components/Post";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/post/:postId" element={<Post />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
