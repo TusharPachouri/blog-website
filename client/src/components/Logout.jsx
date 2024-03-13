@@ -1,17 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
-const Profile = () => {
+const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/logout`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch("/api/v1/users/logout", {
+        method: "GET",
+        credentials: "include",
+      });
       if (response.ok) {
         // Clear any local storage, state, or context related to authentication
         // Redirect the user to the login page or any other page
@@ -20,7 +17,7 @@ const Profile = () => {
         window.location.reload();
       } else {
         console.error("Failed to log out");
-      } 
+      }
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -38,4 +35,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Logout;
