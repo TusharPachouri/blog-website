@@ -1,4 +1,5 @@
 import { useState } from "react";
+import backgroundImage from "../assets/img/backgroundImage.jpg";
 import axios from "axios";
 
 const Contact = () => {
@@ -16,10 +17,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `/api/v1/contacts/`,
-        formData
-      );
+      const response = await axios.post(`/api/v1/contacts/`, formData);
       console.log(response.data); // Assuming you want to log the response
       // Clear form fields after successful submission
       setFormData({
@@ -36,10 +34,9 @@ const Contact = () => {
 
   return (
     <div
-      className="min-h-screen flex justify-center items-center"
+      className="min-h-screen flex justify-center items-center bg-cover bg-center bg-no-repeat bg-fixed bg-black bg-opacity-75"
       style={{
-        backgroundImage:
-          "url('https://source.unsplash.com/random/1920x1080/?dark,nature')",
+        backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -133,7 +130,7 @@ const Contact = () => {
               </button>
               <button
                 type="submit"
-                className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition duration-300"
+                className="px-6 py-2  bg-blue-600 hover:bg-blue-700 text-white transition duration-300"
               >
                 SEND
               </button>
@@ -148,7 +145,7 @@ const Contact = () => {
             className="flex items-center justify-center space-x-2"
           >
             <svg
-              className="w-6 h-6 fill-current text-pink-500"
+              className="w-6 h-6 fill-current text-blue-600"
               viewBox="0 0 200 200"
             >
               <circle cx="100" cy="100" r="90" strokeWidth="20" />

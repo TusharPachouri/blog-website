@@ -65,6 +65,15 @@ const Profile = () => {
       console.error("Error deleting post:", error);
     }
   };
+  const [expandedPosts, setExpandedPosts] = useState([]);
+
+  const toggleExpansion = (postId) => {
+    if (expandedPosts.includes(postId)) {
+      setExpandedPosts(expandedPosts.filter((id) => id !== postId));
+    } else {
+      setExpandedPosts([...expandedPosts, postId]);
+    }
+  };
 
   return (
     <div
@@ -72,11 +81,11 @@ const Profile = () => {
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* User Details */}
-      <div className="bg-100 rounded-xl py-8 px-4 relative">
+      <div className="bg-100 rounded-xl py-8 px-4 relative mt-16">
         {userData && (
-          <div className="max-w-lg mx-auto rounded overflow-hidden shadow-lg bg-black relative">
+          <div className="max-w-lg mx-auto overflow-hidden rounded-3xl shadow-lg bg-black relative">
             <div
-              className="profile-cover w-full h-48 bg-cover bg-center relative"
+              className="profile-cover w-full h-48 bg-cover bg-center relative rounded-3xl"
               style={{ backgroundImage: `url(${userData.coverImage})` }}
             >
               <div className="absolute left-0 top-0 h-full w-1/2">
@@ -84,7 +93,7 @@ const Profile = () => {
               </div>
               <div className="absolute top-1/2 transform -translate-y-.2 ml-50">
                 <img
-                  className="w-32 h-32 rounded-full border-4 border-white"
+                  className="w-32 h-32 rounded-full border-4 border-blue-300"
                   src={userData.avatar}
                   alt="Avatar"
                 />
@@ -93,22 +102,26 @@ const Profile = () => {
             <div className="px-6 py-4">
               <div className="text-center">
                 <div className="font-bold text-white text-xl mb-2 text-glossy  ">
-                  <b>Name: </b>{" "}
-                  {userData.fullName
-                    .split(" ")
-                    .map(
-                      (word) =>
-                        word.charAt(0).toUpperCase() +
-                        word.slice(1).toLowerCase()
-                    )
-                    .join(" ")}
+                  <div className="border-t-2 border-blue-300 "></div>
+                  <b className=" text-2xl text-blue-300">Name: </b>{" "}
+                  <span className="text-xl text-glossy">
+                    {userData.fullName
+                      .split(" ")
+                      .map(
+                        (word) =>
+                          word.charAt(0).toUpperCase() +
+                          word.slice(1).toLowerCase()
+                      )
+                      .join(" ")}
+                  </span>
                 </div>
                 <p className="  text-white text-base text-glossy">
-                  <b>Email: </b>
-                  {userData.email}
+                  <b className=" text-2xl text-blue-300">Email: </b>
+                  <span className="text-xl ">{userData.email}</span>
                 </p>
                 <p className=" text-white text-base text-glossy">
-                  <b>Username:</b> {userData.username}
+                  <b className=" text-2xl text-blue-300">Username: </b>{" "}
+                  <span className="text-xl ">{userData.username}</span>
                 </p>
               </div>
             </div>
@@ -118,55 +131,76 @@ const Profile = () => {
 
       {/* User Posts */}
       <div className="container mx-auto py-8">
-  <h2 className="text-2xl font-semibold text-white mb-4">
-    <b>My Posts: </b>
-  </h2>
+        <h2 className="text-2xl font-semibold text-white mb-4">
+          <b>My Posts: </b>
+        </h2>
 
-  <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 relative">
-    {userPosts.map((post) => (
-      <div
-        key={post._id}
-        className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden relative"
-      >
-        <div className="relative">
-          <img
-            className="w-full h-64 object-cover"
-            src={post.postImage}
-            alt={post.title}
-          />
-          <div
-            className="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
-          >
-            <Link
-              to={`/post/${post._id}`}
-              className="bg-white text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-200 transition-colors duration-300"
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 relative">
+          {userPosts.map((post) => (
+            <div
+              key={post._id}
+              className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden relative"
             >
-              Read More
-            </Link>
-          </div>
-        </div>
+              <div className="relative">
+                <img
+                  className="w-full h-64 object-cover"
+                  src={post.postImage}
+                  alt={post.title}
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <Link
+                    to={`/post/${post._id}`}
+                    className="bg-white text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-200 transition-colors duration-300"
+                  >
+                    Read More
+                  </Link>
+                </div>
+              </div>
 
-        <div className="p-4">
-          <h1 className="text-xl font-semibold text-gray-800 mb-2">
-            {post.title}
-          </h1>
-          <h2 className="text-sm text-gray-600 mb-2">
-            <b>By:</b> {post.owner.username}
-          </h2>
-          <p className="text-gray-700 mb-4">
-            <b>Content:</b> {post.content}
-          </p>
-          <button
-            onClick={() => handleDeletePost(post._id)}
-            className="bg-red-500 text-white py-1 px-2 rounded-md text-sm"
-          >
-            Delete
-          </button>
+              <div className="p-4">
+                <h1 className="text-xl font-semibold text-gray-800 mb-2">
+                  <b className=" underline">Title</b>: {post.title}
+                </h1>
+
+                <h2 className="text-sm text-gray-600 mb-2">
+                  <b>Name: </b>{" "}
+                  {post.owner.fullName
+                    .split(" ")
+                    .map(
+                      (word) =>
+                        word.charAt(0).toUpperCase() +
+                        word.slice(1).toLowerCase()
+                    )
+                    .join(" ")}
+                </h2>
+
+                <p className="text-sm text-gray-600 mb-1">
+                  <b>Content:</b>{" "}
+                  {expandedPosts.includes(post._id)
+                    ? post.content
+                    : `${post.content.slice(0, 100)}...`}
+                  {post.content.length > 100 && (
+                    <button
+                      className="text-blue-600 hover:underline focus:outline-none"
+                      onClick={() => toggleExpansion(post._id)}
+                    >
+                      {expandedPosts.includes(post._id)
+                        ? "Show Less"
+                        : "Read More"}
+                    </button>
+                  )}
+                </p>
+                <button
+                  onClick={() => handleDeletePost(post._id)}
+                  className="bg-red-500 text-white py-1 px-2 rounded-md text-sm"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    ))}
-  </div>
-</div>
 
       {/* Logout Button */}
       <div className="fixed bottom-4 right-4">

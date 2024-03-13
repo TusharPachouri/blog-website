@@ -11,7 +11,7 @@ const Home = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await fetch(
-          `/api/v1/users/user`,   // todo: here
+          `/api/v1/users/user`, // todo: here
           {
             method: "GET",
             credentials: "include", // Include credentials for authentication (cookies)
@@ -50,12 +50,12 @@ const Home = () => {
   return (
     <>
       <div
-        className="flex flex-col items-center justify-center"
+        className="flex flex-col items-center justify-center mt-0 px-10"
         style={{ backgroundImage: `url(${background})` }}
       >
         {loggedIn && (
           <>
-            <h1 className="font-bold text-red-700 text-5xl mb-2 text-glossy ">
+            <h1 className="font-bold text-red-700 text-5xl mb-2 mt-20 px-10 ">
               Create a New Post{" "}
             </h1>
             {isCreatePostVisible ? (
@@ -79,7 +79,7 @@ const Home = () => {
             )}
           </>
         )}
-        <h1 className="font-bold text-red-700 text-5xl mb-2 text-glossy ">
+        <h1 className="font-bold text-red-700 text-5xl mb-2 mt-20 px-10  ">
           Posts{" "}
         </h1>
         <Posts />

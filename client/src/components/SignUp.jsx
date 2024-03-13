@@ -1,4 +1,5 @@
 import { useState } from "react";
+import backgroundImage from "../assets/img/backgroundImage.jpg";
 import "../App.css";
 
 const SignUp = () => {
@@ -33,29 +34,23 @@ const SignUp = () => {
 
     try {
       setLoading(true); // Set loading to true when the form is submitted
-      const response = await fetch(
-        `/api/v1/users/register`,
-        {
-          method: "POST",
-          body: formDataToSend,
-        }
-      );
+      const response = await fetch(`/api/v1/users/register`, {
+        method: "POST",
+        body: formDataToSend,
+      });
 
       if (response.ok) {
         // Registration successful, proceed with login
-        const loginResponse = await fetch(
-          `/api/v1/users/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username: formData.username,
-              password: formData.password,
-            }),
-          }
-        );
+        const loginResponse = await fetch(`/api/v1/users/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            password: formData.password,
+          }),
+        });
 
         if (loginResponse.ok) {
           const data = await loginResponse.json();
@@ -80,10 +75,9 @@ const SignUp = () => {
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen pt-16"
+      className="flex justify-center items-center  pt-16"
       style={{
-        backgroundImage:
-          "url('https://source.unsplash.com/random/1920x1080/?dark,abstract')",
+        backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

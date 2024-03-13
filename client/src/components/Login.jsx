@@ -1,4 +1,5 @@
 import { useState } from "react";
+import backgroundImage from "../assets/img/backgroundImage.jpg";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -24,17 +25,14 @@ const Login = () => {
     try {
       setLoading(true); // Start loading
 
-      const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/login`,
-        {
-          method: "POST",
-          credentials: "include", // Include credentials for authentication (cookies)
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`/api/v1/users/login`, {
+        method: "POST",
+        credentials: "include", // Include credentials for authentication (cookies)
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
       console.log(response);
 
       const data = await response.json();
@@ -60,8 +58,7 @@ const Login = () => {
     <div
       className="flex justify-center items-center min-h-screen"
       style={{
-        backgroundImage:
-          "url('https://source.unsplash.com/random/1920x1080/?dark,technology')",
+        backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

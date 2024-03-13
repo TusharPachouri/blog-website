@@ -1,12 +1,13 @@
 import { useState } from "react";
+import backgroundImage from "../assets/img/backgroundImage.jpg";
 import "../App.css";
 
 const AboutUs = () => {
   const [userData] = useState({
     username: "tusharpachouri",
     fullName: "Tushar Pachouri",
-    avatar: "https://source.unsplash.com/random/1920x1080/?dark,abstract", // Your avatar image URL
-    coverImage: "https://source.unsplash.com/random/1920x1080/?dark,abstract", // Your cover image URL
+    avatar: "https://source.unsplash.com/random/1920x1080/?dark,abstract", // Use backgroundImage for avatar
+    coverImage: backgroundImage, // Use backgroundImage for cover image
     aboutMe:
       "Full-Stack Developer | ReactJS | NodeJS | Designing and Building Unique Digital Experiences.",
   });
@@ -15,8 +16,7 @@ const AboutUs = () => {
     <div
       className="flex justify-center items-center min-h-screen pt-16"
       style={{
-        backgroundImage:
-          "url('https://source.unsplash.com/random/1920x1080/?dark,abstract')",
+        backgroundImage: `url(${userData.coverImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -27,7 +27,7 @@ const AboutUs = () => {
           <div className="flex justify-center mb-6">
             <img
               className="w-32 h-32 rounded-full border-4 border-white"
-              src={userData.avatar}
+              src={userData.avatar} // Use userData.avatar for the avatar image
               alt="Avatar"
             />
           </div>

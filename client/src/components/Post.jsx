@@ -26,48 +26,52 @@ const Post = () => {
 
     fetchPost();
   }, [postId]);
+  const formatTime = (time) => {
+    return new Date(time).toLocaleString();
+  };
 
   return (
     <>
       <div style={{ backgroundImage: `url(${backgroundImage})` }}>
-        <div className="container bg-black mx-auto mt-05 px-4">
+        <div className="container mx-auto mt-0 px-3">
           {post ? (
-            <div
-              className="bg-black rounded-3xl shadow-lg overflow-hidden "
-              style={{ backgroundImage: `url(${backgroundImage})` }}
-            >
-              {/* Avatar */}
-              <img
-                className="w-20 h-20 rounded-full mx-auto mt-4"
-                src={post.owner.avatar}
-                alt="Avatar"
-              />
+            <div className="rounded-3xl shadow-lg overflow-hidden">
+              {/* Avatar and Name */}
+              <div className="flex rounded-3xl items-center p-4 mt-20">
+                <img
+                  className="w-12 h-12 rounded-full mr-4"
+                  src={post.owner.avatar}
+                  alt="Avatar"
+                />
+                <h2 className="max-w-lg text-3xl font-semibold leading-normal text-gray-900 dark:text-red-700 ">
+                  {post.owner.fullName
+                    .split(" ")
+                    .map((name) => name.charAt(0).toUpperCase() + name.slice(1))
+                    .join(" ")}
+                </h2>
+              </div>
 
               {/* Post Image */}
-              <div className="relative flex justify-center">
+              <div className="relative rounded-3xl overflow-hidden">
                 <img
-                  className="w-50 h-90 object-cover"
+                  className="w-full h-auto rounded-md"
                   src={post.postImage}
                   alt={post.title}
                 />
               </div>
 
               {/* Post Details */}
-              <div className="p-6">
-                <h1 className="text-3xl font-bold text-white mb-4 text-glossy">
-                  {post.title}
+              <div className="p-6 text-center">
+                <h1 className="text-3xl font-semibold leading-normal  dark:text-red-700 mb-2">
+                  <u className="text-glossy">Title:</u>{" "}
+                  <span className="text-white">{post.title}</span>
                 </h1>
-                <h2 className="text-lg text-white mb-4">
-                  <span className="font-semibold">
-                    <b>By:</b>
-                  </span>{" "}
-                  <span className="capitalize text-glossy">
-                    {post.owner.fullName}
-                  </span>
-                </h2>
-                <p className="text-white leading-relaxed mb-6 text-glossy">
-                  <b>Content: </b>
-                  {post.content}
+                <h1 className="text-xl font-semibold leading-normal  dark:text-red-700 mb-2">
+                  <u className="text-glossy">Content:</u>{" "}
+                  <span className="text-white">{post.content}</span>
+                </h1>
+                <p className="text-sm text-gray-600 dark:text-gray-400 text-right">
+                  Uploaded on: {formatTime(post.createdAt)}
                 </p>
               </div>
             </div>

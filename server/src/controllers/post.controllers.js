@@ -36,7 +36,7 @@ const createPost = asyncHandler(async (req, res) => {
 
 const getPosts = asyncHandler(async (req, res) => {
   try {
-    const posts = await Post.find().populate("owner", "username avatar");
+    const posts = await Post.find().populate("owner", "username avatar fullName");
     res.status(200).json(new ApiResponse(200, { posts }));
   } catch (error) {
     console.log("Error while fetching the posts: ", error.message);
@@ -52,7 +52,7 @@ const getLoggedInUserAllPosts = asyncHandler(async (req, res) => {
     if (!user) throw new ApiError(404, "User not found");
     const posts = await Post.find({ owner: user._id }).populate(
       "owner",
-      "username avatar"
+      "username avatar fullName"
     );
     res.status(200).json(new ApiResponse(200, { posts }));
   } catch (error) {

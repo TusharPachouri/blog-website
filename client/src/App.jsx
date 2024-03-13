@@ -8,21 +8,8 @@ import Profile from "./components/Profile";
 import AboutUs from "./components/AboutUs";
 import Post from "./components/Post";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    // Perform login logic and set isLoggedIn to true
-
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    // Perform logout logic and set isLoggedIn to false
-    setIsLoggedIn(false);
-  };
   return (
     <div className="App">
       <BrowserRouter>

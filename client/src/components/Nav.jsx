@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import backgroundImage from "../assets/img/backgroundImage.jpg"; // Replace this with the path to your background image
 
 const Nav = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -8,13 +9,10 @@ const Nav = () => {
     // Function to fetch user details from the backend API
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user`,
-          {
-            method: "GET",
-            credentials: "include", // Include credentials for authentication (cookies)
-          }
-        );
+        const response = await fetch(`/api/v1/users/user`, {
+          method: "GET",
+          credentials: "include", // Include credentials for authentication (cookies)
+        });
         const data = await response.json();
         if (response.ok && data.success) {
           setLoggedIn(true);
@@ -31,9 +29,17 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className="bg-gray-800 py-4 md:flex md:justify-between md:items-center">
-      <div className="mx-4 md:mx-0">
-        {/* Your logo */}
+    <nav
+      className="bg-slate-950 py-2 md:flex md:justify-between md:items-center rounded-xl fixed top-0 w-full z-50"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
+      <div className="mx-1 md:mx-0">
+        <Link
+          to="/"
+          className="text-4xl font-bold leading-normal dark:text-red-700 text-center block"
+        >
+          Blogging Website
+        </Link>
       </div>
       <ul className="flex flex-col md:flex-row md:space-x-4 mx-4 md:mx-0">
         <li>
@@ -60,7 +66,7 @@ const Nav = () => {
             Contact
           </Link>
         </li>
-        { loggedIn && (
+        {loggedIn && (
           <li>
             <Link
               to="/profile"
