@@ -40,16 +40,16 @@ const app = express();
 //   })
 // );
 
-const options = [
-  cors({
-    origin: "*",
-    methods: "*",
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  }),
-];
+// const options = [
+//   cors({
+//     origin: "*",
+//     methods: "*",
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//     credentials: true,
+//   }),
+// ];
 
-app.use(options);
+// app.use(options);
 app.options("*", cors());
 
 app.use(
