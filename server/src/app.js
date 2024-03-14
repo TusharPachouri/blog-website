@@ -39,6 +39,17 @@ const app = express();
 //     //   "X-Requested-With,content-type, Authorization, x-auth-token",
 //   })
 // );
+
+const options = [
+  cors({
+    origin: "*",
+    methods: "*",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+];
+
+app.use(options);
 app.options("*", cors());
 
 app.use(

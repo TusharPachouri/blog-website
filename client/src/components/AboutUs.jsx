@@ -1,6 +1,5 @@
 import { useState } from "react";
 import backgroundImage from "../assets/img/backgroundImage.jpg";
-import "../App.css";
 
 const AboutUs = () => {
   const [userData] = useState({
