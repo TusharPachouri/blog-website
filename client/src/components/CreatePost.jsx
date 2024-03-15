@@ -67,10 +67,13 @@ const CreatePost = () => {
     try {
       setLoading(true);
 
-      const response = await fetch("/api/v1/posts/create", {
-        method: "POST",
-        body: formDataToSend,
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/create`,
+        {
+          method: "POST",
+          body: formDataToSend,
+        }
+      );
 
       if (response.ok) {
         console.log("Post created successfully");
