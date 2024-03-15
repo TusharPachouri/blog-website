@@ -17,7 +17,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`/api/v1/contacts/`, formData);
+      const response = await axios.post(`https://blog-website-two-rose.vercel.app/api/v1/contacts/`, formData);
       console.log(response.data); // Assuming you want to log the response
       // Clear form fields after successful submission
       setFormData({

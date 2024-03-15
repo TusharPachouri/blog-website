@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://blog-website-two-rose.vercel.app",
+        target: "http://localhost:8080/",
         changeOrigin: true,
         secure: false,
       },

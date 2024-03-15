@@ -5,13 +5,21 @@ const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("/api/v1/users/logout", {
-        method: "GET",
-        credentials: "include",
-      });
+      const response = await fetch(
+        "/api/v1/users/logout",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
       if (response.ok) {
         // Clear any local storage, state, or context related to authentication
         // Redirect the user to the login page or any other page
+        document.cookie =
+          "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie =
+          "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
         navigate("/");
         // Reload the page
         window.location.reload();
