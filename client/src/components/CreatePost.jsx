@@ -22,12 +22,18 @@ const CreatePost = () => {
       postImage: e.target.files[0],
     });
   };
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       setLoading(true); // Start loading
+      const accessToken = getCookie("accessToken");
 
       const formDataToSend = new FormData();
       formDataToSend.append("title", formData.title);
@@ -40,6 +46,10 @@ const CreatePost = () => {
           method: "POST",
           body: formDataToSend,
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
       );
 
