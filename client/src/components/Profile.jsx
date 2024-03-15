@@ -18,9 +18,10 @@ const Profile = () => {
         const accessToken = getCookie("accessToken");
 
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user/`,
+          `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user`,
           {
             method: "GET",
+            credentials:"include",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${accessToken}`,

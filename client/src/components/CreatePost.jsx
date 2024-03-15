@@ -76,8 +76,8 @@ const CreatePost = () => {
       );
 
       if (response.ok) {
-        console.log("Post created successfully");
         setFormData({ title: "", content: "", postImage: null });
+        window.location.reload();
       } else {
         console.error("Failed to create post");
       }
