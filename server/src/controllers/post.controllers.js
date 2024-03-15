@@ -9,7 +9,7 @@ import {
 } from "../utils/cloudinary.js";
 
 const createPost = asyncHandler(async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, userId } = req.body;
 
   if (!title || !content)
     throw new ApiError(400, "Title and content are required");
@@ -24,7 +24,7 @@ const createPost = asyncHandler(async (req, res) => {
     title,
     content,
     postImage,
-    owner: req.user._id,
+    owner: userId,
     comments: [],
   });
 

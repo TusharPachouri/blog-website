@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const CreatePost = () => {
   const [formData, setFormData] = useState({
@@ -6,63 +6,82 @@ const CreatePost = () => {
     content: "",
     postImage: null,
   });
-
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState(null); // State to store the user ID
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const getCookie = (name) => {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(";").shift();
+        };
+        const accessToken = getCookie("accessToken");
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        const data = await response.json();
+        if (response.ok) {
+          if (data && data.data) {
+            setUserId(data.data._id); // Set the user ID
+          } else {
+            console.error("User details not found in response data:", data);
+          }
+        } else {
+          console.error("Response not OK:", response);
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, []); // Empty dependency array to run once on component mount
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleImageChange = (e) => {
-    setFormData({
-      ...formData,
-      postImage: e.target.files[0],
-    });
+    setFormData({ ...formData, postImage: e.target.files[0] });
   };
-  // const getCookie = (name) => {
-  //   const value = `; ${document.cookie}`;
-  //   const parts = value.split(`; ${name}=`);
-  //   if (parts.length === 2) return parts.pop().split(";").shift();
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("content", formData.content);
+    formDataToSend.append("postImage", formData.postImage);
+    formDataToSend.append("userId", userId); // Add userId to the formData
+
     try {
-      setLoading(true); // Start loading
-      // const accessToken = getCookie("accessToken");
+      setLoading(true);
 
-      const formDataToSend = new FormData();
-      formDataToSend.append("title", formData.title);
-      formDataToSend.append("content", formData.content);
-      formDataToSend.append("postImage", formData.postImage);
+      const response = await fetch("/api/v1/posts/create", {
+        method: "POST",
+        body: formDataToSend,
+      });
 
-      const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/create`,
-        {
-          method: "POST",
-          body: formDataToSend,
-          credentials: "include",
-          
-        }
-      );
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message);
+      if (response.ok) {
+        console.log("Post created successfully");
+        setFormData({ title: "", content: "", postImage: null });
+      } else {
+        console.error("Failed to create post");
       }
-
-      window.location.href = "/";
-      // Post created successfully
-      // Handle redirection to another page or display a success message
     } catch (error) {
-      console.error("Error creating post:", error.message);
-      // Handle error (display error message, etc.)
+      console.error("Error:", error);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
