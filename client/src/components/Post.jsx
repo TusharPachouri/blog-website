@@ -9,7 +9,7 @@ const Post = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`https://blog-website-two-rose.vercel.app/api/v1/posts/${postId}`);
+        const response = await fetch(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/${postId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }

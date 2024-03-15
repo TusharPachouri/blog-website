@@ -31,7 +31,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
-        const response = await fetch(`/api/v1/posts/user`, {
+        const response = await fetch(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/user`, {
           method: "GET",
           credentials: "include",
         });
@@ -51,7 +51,7 @@ const Profile = () => {
 
   const handleDeletePost = async (postId) => {
     try {
-      const response = await fetch(`/api/v1/posts/delete/${postId}`, {
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/delete/${postId}`, {
         method: "DELETE",
         credentials: "include",
       });

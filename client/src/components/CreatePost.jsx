@@ -35,7 +35,7 @@ const CreatePost = () => {
       formDataToSend.append("postImage", formData.postImage);
 
       const response = await fetch(
-        `/api/v1/posts/create`,
+        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/create`,
         {
           method: "POST",
           body: formDataToSend,

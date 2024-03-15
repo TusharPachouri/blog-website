@@ -25,7 +25,7 @@ const Login = () => {
     try {
       setLoading(true); // Start loading
 
-      const response = await fetch(`/api/v1/users/login`, {
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/login`, {
         method: "POST",
         credentials: "include", // Include credentials for authentication (cookies)
         headers: {

@@ -9,7 +9,7 @@ const Nav = () => {
     // Function to fetch user details from the backend API
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(`/api/v1/users/user`, {
+        const response = await fetch(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user`, {
           method: "GET",
           credentials: "include", // Include credentials for authentication (cookies)
         });

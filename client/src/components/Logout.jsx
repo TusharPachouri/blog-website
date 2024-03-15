@@ -6,7 +6,7 @@ const Logout = () => {
   const handleLogout = async () => {
     try {
       const response = await fetch(
-        "/api/v1/users/logout",
+        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/logout`,
         {
           method: "GET",
           credentials: "include",
