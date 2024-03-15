@@ -2,14 +2,24 @@ import { useNavigate } from "react-router-dom";
 
 const Logout = () => {
   const navigate = useNavigate();
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
 
   const handleLogout = async () => {
     try {
+      const accessToken = getCookie("accessToken");
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/logout`,
         {
           method: "GET",
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
       );
       if (response.ok) {

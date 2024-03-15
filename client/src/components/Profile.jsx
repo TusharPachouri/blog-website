@@ -6,17 +6,14 @@ import backgroundImage from "../assets/img/backgroundImage.jpg"; // Replace this
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
-
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`; // Function to extract cookie value by name
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Function to extract cookie value by name
-        const getCookie = (name) => {
-          const value = `; ${document.cookie}`;
-          const parts = value.split(`; ${name}=`);
-          if (parts.length === 2) return parts.pop().split(";").shift();
-        };
-
         // Extract accessToken from cookies
         const accessToken = getCookie("accessToken");
 
@@ -48,16 +45,15 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
+        const accessToken = getCookie("accessToken");
         const response = await fetch(
           `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/user`,
           {
             method: "GET",
             credentials: "include",
             headers: {
-              "Content-Type": "application/json", // Example header
-              // Add any other headers you need here
-              // Authorization header with bearer token if required
-              // "Authorization": `Bearer ${token}`
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
             },
           }
         );
@@ -77,11 +73,16 @@ const Profile = () => {
 
   const handleDeletePost = async (postId) => {
     try {
+      const accessToken = getCookie("accessToken");
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/delete/${postId}`,
         {
           method: "DELETE",
           credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
       );
       if (response.ok) {
