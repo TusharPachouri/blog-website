@@ -4,41 +4,41 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", req.headers.origin);
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 // app.use(
 //   cors({
-//     origin: "https://blog-website-alpha-ten.vercel.app",
+//     origin: "https://blog-website-client-two.vercel.app",
 //     methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
 //     allowedHeaders: "X-Requested-With,content-type",
 //     credentials: true,
 //   })
 // );
-// app.use(
-//   cors({
-//     origin: [
-//       "*",
-//       "https://blog-website-alpha-ten.vercel.app/",
-//       "https://blog-website-alpha-ten.vercel.app/login",
-//       "https://blog-website-alpha-ten.vercel.app/profile",
-//       "https://blog-website-alpha-ten.vercel.app",
-//       "http://localhost:5173",
-//       "https://blog-website-tushar-pachouris-projects.vercel.app/",
-//       "https://vercel.com/tushar-pachouris-projects/blog-website/DTYHxjoaSAcRuEJVAWgwHXFDLKu4",
-//       "https://blog-website-5qclhd8po-tushar-pachouris-projects.vercel.app/",
-//     ],
-//     credentials: true,
-//     methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
-//     // allowedHeaders:
-//     //   "X-Requested-With,content-type, Authorization, x-auth-token",
-//   })
-// );
+app.use(
+  cors({
+    origin: [
+      "*",
+      "https://blog-website-client-two.vercel.app/",
+      "https://blog-website-alpha-ten.vercel.app/login",
+      "https://blog-website-alpha-ten.vercel.app/profile",
+      "https://blog-website-client-two.vercel.app",
+      "http://localhost:5173",
+      "https://blog-website-tushar-pachouris-projects.vercel.app/",
+      "https://vercel.com/tushar-pachouris-projects/blog-website/DTYHxjoaSAcRuEJVAWgwHXFDLKu4",
+      "https://blog-website-5qclhd8po-tushar-pachouris-projects.vercel.app/",
+    ],
+    credentials: true,
+    methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+    // allowedHeaders:
+    //   "X-Requested-With,content-type, Authorization, x-auth-token",
+  })
+);
 
 // const options = [
 //   cors({

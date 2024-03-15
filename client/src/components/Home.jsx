@@ -15,6 +15,12 @@ const Home = () => {
           {
             method: "GET",
             credentials: "include", // Include credentials for authentication (cookies)
+            headers: {
+              "Content-Type": "application/json", // Example header
+              // Add any other headers you need here
+              // Authorization header with bearer token if required
+              // "Authorization": `Bearer ${token}`
+            }
           }
         );
         const data = await response.json();

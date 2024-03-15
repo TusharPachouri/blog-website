@@ -10,10 +10,13 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`/api/v1/users/user/`, {
-          method: "GET",
-          credentials: "include", // todo
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user/`,
+          {
+            method: "GET",
+            credentials: "include", // todo
+          }
+        );
         if (response.ok) {
           const userData = await response.json();
           setUserData(userData.data);
@@ -31,10 +34,19 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/user`, {
-          method: "GET",
-          credentials: "include",
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/user`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json", // Example header
+              // Add any other headers you need here
+              // Authorization header with bearer token if required
+              // "Authorization": `Bearer ${token}`
+            },
+          }
+        );
         if (response.ok) {
           const postData = await response.json();
           setUserPosts(postData.data.posts);
@@ -51,10 +63,13 @@ const Profile = () => {
 
   const handleDeletePost = async (postId) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/delete/${postId}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/delete/${postId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
       if (response.ok) {
         setUserPosts(userPosts.filter((post) => post._id !== postId));
         console.log("Post deleted successfully");
