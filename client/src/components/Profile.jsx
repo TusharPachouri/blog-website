@@ -10,13 +10,27 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        // Function to extract cookie value by name
+        const getCookie = (name) => {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(";").shift();
+        };
+
+        // Extract accessToken from cookies
+        const accessToken = getCookie("accessToken");
+
         const response = await fetch(
           `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user/`,
           {
             method: "GET",
-            credentials: "include", // todo
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
           }
         );
+
         if (response.ok) {
           const userData = await response.json();
           setUserData(userData.data);

@@ -10,21 +10,25 @@ const Home = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
+        const getCookie = (name) => {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(";").shift();
+        };
+        // Extract accessToken from cookies
+        const accessToken = getCookie("accessToken");
         const response = await fetch(
           `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user`,
           {
             method: "GET",
             credentials: "include", // Include credentials for authentication (cookies)
             headers: {
-              "Content-Type": "application/json", // Example header
-              // Add any other headers you need here
-              // Authorization header with bearer token if required
-              // "Authorization": `Bearer ${token}`
-            }
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
           }
         );
         const data = await response.json();
-
         if (response.ok) {
           if (data && data.data) {
             setLoggedIn(true);
