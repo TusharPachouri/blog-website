@@ -13,7 +13,6 @@ const createPost = asyncHandler(async (req, res) => {
 
   if (!title || !content)
     throw new ApiError(400, "Title and content are required");
-  if (!req.user._id) throw new ApiError(401, "Unauthorized");
   let postImage = null;
   if (req.file) {
     const imageLocalPath = req.file.path;
