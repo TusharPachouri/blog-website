@@ -2,19 +2,20 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Posts = () => {
-  // console.log(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts`)
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [expandedPosts, setExpandedPosts] = useState([]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts`
       );
-      // console.log(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts`)
       const data = await response.json();
       if (response.ok) {
         setPosts(data.data.posts);
@@ -23,10 +24,10 @@ const Posts = () => {
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
-
-  const [expandedPosts, setExpandedPosts] = useState([]);
 
   const toggleExpansion = (postId) => {
     if (expandedPosts.includes(postId)) {
@@ -35,6 +36,14 @@ const Posts = () => {
       setExpandedPosts([...expandedPosts, postId]);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -60,7 +69,7 @@ const Posts = () => {
           </div>
           <div className="p-4">
             <h1 className="text-xl font-semibold text-gray-800 mb-2">
-              <b className=" underline">Title</b>: {post.title}
+              <b className="underline">Title</b>: {post.title}
             </h1>
             <h2 className="text-sm text-gray-600 mb-2">
               <b>Name: </b>{" "}
@@ -75,7 +84,6 @@ const Posts = () => {
             <h2 className="text-sm text-gray-600 mb-2">
               <b>Username:</b> {post.owner.username}
             </h2>
-
             <p className="text-sm text-gray-600 mb-1">
               <b>Content:</b>{" "}
               {expandedPosts.includes(post._id)

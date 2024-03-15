@@ -6,25 +6,28 @@ import Home from "./components/Home";
 import Contact from "./components/Contact";
 import Profile from "./components/Profile";
 import AboutUs from "./components/AboutUs";
+import Footer from "./components/Footer";
 import Post from "./components/Post";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <div className="flex flex-col min-h-screen">
       <BrowserRouter>
         <Nav />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/post/:postId" element={<Post />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
+        <div className="flex-grow pt-16 ">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/post/:postId" element={<Post />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </div>
+        <Footer />
       </BrowserRouter>
-      {/* <Footer /> */}
     </div>
   );
 }

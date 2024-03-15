@@ -29,6 +29,7 @@ app.use(
       "https://blog-website-client-two.vercel.app/signup",
       "https://blog-website-client-two.vercel.app",
       "http://localhost:5173",
+      "http://localhost:5173/",
       "https://blog-website-tushar-pachouris-projects.vercel.app/",
       "https://vercel.com/tushar-pachouris-projects/blog-website/DTYHxjoaSAcRuEJVAWgwHXFDLKu4",
       "https://blog-website-5qclhd8po-tushar-pachouris-projects.vercel.app/",
