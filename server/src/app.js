@@ -25,8 +25,8 @@ app.use(
     origin: [
       "*",
       "https://blog-website-client-two.vercel.app/",
-      "https://blog-website-alpha-ten.vercel.app/login",
-      "https://blog-website-alpha-ten.vercel.app/profile",
+      "https://blog-website-client-two.vercel.app/login",
+      "https://blog-website-client-two.vercel.app/signup",
       "https://blog-website-client-two.vercel.app",
       "http://localhost:5173",
       "https://blog-website-tushar-pachouris-projects.vercel.app/",
