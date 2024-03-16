@@ -1,0 +1,23 @@
+{
+    "builds": [
+      {
+        "src": "./src",
+        "use": "@vercel/static-build",
+        "config": {
+          "outputPath": "./dist"
+        }
+      }
+    ],
+    "routes": [
+      {
+         "src": "/(.*)",
+        "dest": "/index.html"
+      }
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+      ]
+  }
