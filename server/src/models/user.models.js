@@ -23,7 +23,7 @@ const userSchema = new Schema(
       type: String, // will take it from cloud provider
     },
     coverImage: {
-      type: String, // will take it from cloud provider
+      type: String,
     },
     fullName: {
       type: String,
