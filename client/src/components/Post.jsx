@@ -12,6 +12,7 @@ const Post = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleShareModal = () => {
     setShowShareModal(!showShareModal);
@@ -34,6 +35,8 @@ const Post = () => {
         }
       } catch (error) {
         console.error("Error fetching post:", error);
+      } finally {
+        setIsLoading(false); // Set loading to false after fetching user data
       }
     };
 
@@ -52,6 +55,11 @@ const Post = () => {
           backgroundPosition: "center",
         }}
       >
+        {isLoading && (
+          <div className="flex justify-center items-center h-screen">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+          </div>
+        )}
         <div className="container mx-auto mt-0 px-3">
           {post ? (
             <div

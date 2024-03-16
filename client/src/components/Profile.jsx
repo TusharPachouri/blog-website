@@ -6,6 +6,7 @@ import backgroundImage from "../assets/img/backgroundImage.jpg"; // Replace this
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const getCookie = (name) => {
     const value = `; ${document.cookie}`; // Function to extract cookie value by name
     const parts = value.split(`; ${name}=`);
@@ -37,6 +38,8 @@ const Profile = () => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
+      } finally {
+        setIsLoading(false); // Set loading to false after fetching user data
       }
     };
 
@@ -66,6 +69,8 @@ const Profile = () => {
         }
       } catch (error) {
         console.error("Error fetching user posts:", error);
+      } finally {
+        setIsLoading(false); // Set loading to false after fetching user data
       }
     };
 
@@ -94,6 +99,8 @@ const Profile = () => {
       }
     } catch (error) {
       console.error("Error deleting post:", error);
+    } finally {
+      setIsLoading(false); // Set loading to false after fetching user data
     }
   };
   const [expandedPosts, setExpandedPosts] = useState([]);
@@ -117,6 +124,11 @@ const Profile = () => {
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* User Details */}
+      {isLoading && (
+        <div className="flex justify-center items-center h-screen">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+        </div>
+      )}
       <div className="bg-100 rounded-xl py-8 px-4 relative mt-16">
         {userData && (
           <div className="max-w-lg mx-auto overflow-hidden rounded-3xl shadow-lg bg-black relative">
