@@ -60,8 +60,10 @@ const Home = () => {
   return (
     <>
       <div
-        className="flex flex-col items-center justify-center mt-0 px-10"
-        style={{ backgroundImage: `url(${background})` }}
+        className="flex flex-col items-center justify-center mt-0 px-10 "
+        style={{ 
+          backgroundImage: `url(${background})`
+         }}
       >
         {loggedIn && (
           <>

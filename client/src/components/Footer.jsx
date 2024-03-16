@@ -1,39 +1,32 @@
-import {
-  FaFacebook,
-  FaGithub,
-  FaInstagram,
-  FaTwitter,
-  FaTwitch,
-} from "react-icons/fa";
+import { FaFacebook, FaGithub, FaInstagram, FaTwitter } from "react-icons/fa";
 import background from "../assets/img/backgroundImage.jpg";
-// import background from "../assets/img/backgroundImage.jpg";
 
 const sections = [
   {
-    title: "Solutions",
-    items: ["Marketing", "Analytics", "Commerce", "Data", "Cloud"],
+    title: "Categories",
+    items: ["Technology", "Travel", "Food", "Lifestyle", "Entertainment"],
   },
   {
-    title: "Support",
-    items: ["Pricing", "Documentation", "Guides", "API Status"],
+    title: "Resources",
+    items: ["Write for Us", "Become a Contributor", "Advertise with Us"],
   },
   {
     title: "Company",
-    items: ["About", "Blog", "Jobs", "Press", "Partners"],
+    items: ["About Us", "Our Team", "Contact Us"],
   },
   {
     title: "Legal",
-    items: ["Claims", "Privacy", "Terms", "Policies", "Conditions"],
+    items: ["Privacy Policy", "Terms of Service", "Disclaimer"],
   },
   {
     title: "About",
     items: [
-      "This is a social media platform where you can share your thoughts, ideas, and experiences with others.",
+      "This is a blog platform where you can share your thoughts, stories, and experiences with the world.",
     ],
   },
   {
     title: "Contact",
-    items: ["Email: tusharpachouri001@gmail.com", "Phone: (123) 456-7890"],
+    items: ["Email: tusharpachouri001@gmail.com", "Phone: 82 18 504 473"],
   },
 ];
 
@@ -41,7 +34,6 @@ const items = [
   { name: "Facebook", icon: FaFacebook, link: "https://www.facebook.com/" },
   { name: "Instagram", icon: FaInstagram, link: "https://www.instagram.com/" },
   { name: "Twitter", icon: FaTwitter, link: "https://twitter.com/" },
-  { name: "Twitch", icon: FaTwitch, link: "https://www.twitch.tv/" },
   { name: "Github", icon: FaGithub, link: "https://github.com/" },
 ];
 
@@ -69,8 +61,8 @@ const Footer = () => {
         </div>
         <hr className="border-color: rgb(99 102 241) my-5" />
         <div className="flex flex-col w-full mx-auto justify-between sm:flex-row text-center text-gray-500">
-          <p className="py-1">2022 Workflow, LLC. All rights reserved</p>
-          <div className="flex justify-between sm:w-[300px] pt-4 text-2xl">
+          <p className="py-1">2024 Blog Website. All rights reserved</p>
+          <div className="flex justify-between sm:w-[200px] pt-2 text-2xl">
             {items.map((x, index) => (
               <a
                 key={index}

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import backgroundImage from "../assets/img/backgroundImage.jpg";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -17,8 +19,13 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/contacts/`, formData);
-      console.log(response.data); // Assuming you want to log the response
+      const response = await axios.post(
+        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/contacts/`,
+        formData
+      );
+      if (response) {
+        toast.success("Message sent successfully");
+      }
       // Clear form fields after successful submission
       setFormData({
         name: "",
@@ -28,6 +35,7 @@ const Contact = () => {
       });
     } catch (error) {
       console.error("Error submitting contact form:", error);
+      toast.error("Error sending message");
       // Handle error display or other actions
     }
   };
@@ -165,6 +173,7 @@ const Contact = () => {
             <span>Tushar Pachouri</span>
           </a>
         </div>
+        <ToastContainer />
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import backgroundImage from "../assets/img/backgroundImage.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -63,6 +65,7 @@ const SignUp = () => {
         }
       } else {
         // Handle registration error
+        toast.error('User Already registered!!'); 
         console.error("Error:", response.statusText);
       }
     } catch (error) {
@@ -227,6 +230,7 @@ const SignUp = () => {
               )}
             </button>
           </div>
+          <ToastContainer />
         </form>
       </div>
     </div>

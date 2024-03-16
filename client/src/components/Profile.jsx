@@ -21,7 +21,7 @@ const Profile = () => {
           `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/user`,
           {
             method: "GET",
-            credentials:"include",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${accessToken}`,
@@ -105,6 +105,11 @@ const Profile = () => {
       setExpandedPosts([...expandedPosts, postId]);
     }
   };
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const options = { month: "long", day: "numeric", year: "numeric" };
+    return date.toLocaleDateString("en-US", options);
+  };
 
   return (
     <div
@@ -165,16 +170,15 @@ const Profile = () => {
         <h2 className="text-2xl font-semibold text-white mb-4">
           <b>My Posts: </b>
         </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {userPosts.map((post) => (
             <div
               key={post._id}
-              className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden relative"
+              className="dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
             >
               <div className="relative">
                 <img
-                  className="w-full h-64 object-cover"
+                  className="w-full h-48 object-cover"
                   src={post.postImage}
                   alt={post.title}
                 />
@@ -187,25 +191,28 @@ const Profile = () => {
                   </Link>
                 </div>
               </div>
-
               <div className="p-4">
-                <h1 className="text-xl font-semibold text-gray-800 mb-2">
-                  <b className=" underline">Title</b>: {post.title}
+                <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-2">
+                  <b className="dark:text-gray-400">Title: </b> {post.title}
                 </h1>
-
-                <h2 className="text-sm text-gray-600 mb-2">
-                  <b>Name: </b>{" "}
-                  {post.owner.fullName
-                    .split(" ")
-                    .map(
-                      (word) =>
-                        word.charAt(0).toUpperCase() +
-                        word.slice(1).toLowerCase()
-                    )
-                    .join(" ")}
+                <h2 className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                  <b>By: </b>{" "}
+                  <span className="dark:text-white">
+                    {post.owner.fullName
+                      .split(" ")
+                      .map(
+                        (word) =>
+                          word.charAt(0).toUpperCase() +
+                          word.slice(1).toLowerCase()
+                      )
+                      .join(" ")}
+                  </span>
                 </h2>
-
-                <p className="text-sm text-gray-600 mb-1">
+                <h2 className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                  <b>Username:</b>{" "}
+                  <span className="dark:text-white">{post.owner.username}</span>
+                </h2>
+                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                   <b>Content:</b>{" "}
                   {expandedPosts.includes(post._id)
                     ? post.content
@@ -221,9 +228,12 @@ const Profile = () => {
                     </button>
                   )}
                 </p>
+                <div className="flex justify-end absolute bottom-0 right-0 p-2">
+                  <p className="text-white">{formatDate(post.createdAt)}</p>
+                </div>
                 <button
                   onClick={() => handleDeletePost(post._id)}
-                  className="bg-red-500 text-white py-1 px-2 rounded-md text-sm"
+                  className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                 >
                   Delete
                 </button>
@@ -234,7 +244,7 @@ const Profile = () => {
       </div>
 
       {/* Logout Button */}
-      <div className="fixed bottom-4 right-4">
+      <div className="fixed bottom-4 right-4 ">
         <Logout />
       </div>
     </div>

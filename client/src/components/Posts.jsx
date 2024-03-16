@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [expandedPosts, setExpandedPosts] = useState([]);
+  // const [expandedPosts, setExpandedPosts] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -18,7 +18,11 @@ const Posts = () => {
       );
       const data = await response.json();
       if (response.ok) {
-        setPosts(data.data.posts);
+        // Sort posts by createdAt timestamp in descending order
+        const sortedPosts = data.data.posts.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setPosts(sortedPosts);
       } else {
         console.error("Error fetching data:", data.message);
       }
@@ -29,12 +33,17 @@ const Posts = () => {
     }
   };
 
-  const toggleExpansion = (postId) => {
-    if (expandedPosts.includes(postId)) {
-      setExpandedPosts(expandedPosts.filter((id) => id !== postId));
-    } else {
-      setExpandedPosts([...expandedPosts, postId]);
-    }
+  // const toggleExpansion = (postId) => {
+  //   if (expandedPosts.includes(postId)) {
+  //     setExpandedPosts(expandedPosts.filter((id) => id !== postId));
+  //   } else {
+  //     setExpandedPosts([...expandedPosts, postId]);
+  //   }
+  // };
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const options = { month: "long", day: "numeric", year: "numeric" };
+    return date.toLocaleDateString("en-US", options);
   };
 
   if (isLoading) {
@@ -50,7 +59,7 @@ const Posts = () => {
       {posts.map((post) => (
         <div
           key={post._id}
-          className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+          className="dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
         >
           <div className="relative">
             <img
@@ -68,23 +77,26 @@ const Posts = () => {
             </div>
           </div>
           <div className="p-4">
-            <h1 className="text-xl font-semibold text-gray-800 mb-2">
-              <b className="underline">Title</b>: {post.title}
+            <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-2">
+              <b className="dark:text-gray-400">Title: </b> {post.title}
             </h1>
-            <h2 className="text-sm text-gray-600 mb-2">
-              <b>Name: </b>{" "}
-              {post.owner.fullName
-                .split(" ")
-                .map(
-                  (word) =>
-                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                )
-                .join(" ")}
+            <h2 className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <b>By: </b>{" "}
+              <span className="dark:text-white">
+                {post.owner.fullName
+                  .split(" ")
+                  .map(
+                    (word) =>
+                      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                  )
+                  .join(" ")}
+              </span>
             </h2>
-            <h2 className="text-sm text-gray-600 mb-2">
-              <b>Username:</b> {post.owner.username}
+            <h2 className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <b>Username:</b>{" "}
+              <span className="dark:text-white">{post.owner.username}</span>
             </h2>
-            <p className="text-sm text-gray-600 mb-1">
+            {/* <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
               <b>Content:</b>{" "}
               {expandedPosts.includes(post._id)
                 ? post.content
@@ -97,10 +109,14 @@ const Posts = () => {
                   {expandedPosts.includes(post._id) ? "Show Less" : "Read More"}
                 </button>
               )}
-            </p>
+            </p> */}
+            <div className="flex justify-end relative bottom-0 right-0 p-2">
+              <p className="text-white ">{formatDate(post.createdAt)}</p>
+            </div>
           </div>
         </div>
-      ))}
+      ))}{" "}
+      {/* Reverse the order of posts to display newest first */}
     </div>
   );
 };

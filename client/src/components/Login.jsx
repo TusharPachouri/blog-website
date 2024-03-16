@@ -1,5 +1,7 @@
 import { useState } from "react";
 import backgroundImage from "../assets/img/backgroundImage.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -25,14 +27,17 @@ const Login = () => {
     try {
       setLoading(true); // Start loading
 
-      const response = await fetch(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/login`, {
-        method: "POST",
-        credentials: "include", // Include credentials for authentication (cookies)
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/users/login`,
+        {
+          method: "POST",
+          credentials: "include", // Include credentials for authentication (cookies)
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       console.log(response);
 
       const data = await response.json();
@@ -40,15 +45,16 @@ const Login = () => {
       if (response.ok) {
         document.cookie = `accessToken=${data.data.accessToken}; path=/`;
         document.cookie = `refreshToken=${data.data.refreshToken}; path=/`;
-        console.log(data.data.accessToken, data.data.refreshToken);
+        // console.log(data.data.accessToken, data.data.refreshToken);
+        toast.success("Login Successfully!");
 
         // Redirect to home page
         window.location.href = "/";
       } else {
-        setErrorMessage(data.message); // Set error message from response data
+        toast.error("Login credentials are incorrect"); // Set error message from response data
       }
     } catch (error) {
-      console.error("Error logging in:", error);
+      toast.error("Login credentials are incorrect");
     } finally {
       setLoading(false); // Stop loading
     }
@@ -125,6 +131,7 @@ const Login = () => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };
