@@ -1,15 +1,28 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
 import backgroundImage from "../assets/img/backgroundImage.jpg";
 
 const Post = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
+  const [showShareModal, setShowShareModal] = useState(false);
+
+  const toggleShareModal = () => {
+    setShowShareModal(!showShareModal);
+  };
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/${postId}`);
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/${postId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }
@@ -32,51 +45,156 @@ const Post = () => {
 
   return (
     <>
-      <div style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <div
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <div className="container mx-auto mt-0 px-3">
           {post ? (
-            <div className="rounded-3xl shadow-lg overflow-hidden">
-              {/* Avatar and Name */}
-              <div className="flex rounded-3xl items-center p-4 mt-20">
+            <div
+              style={{
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+              className="bg-black bg-opacity-75 rounded-lg overflow-hidden w-50"
+            >
+              {/* Post Header */}
+              <div className="flex items-center p-4">
                 <img
-                  className="w-12 h-12 rounded-full mr-4"
+                  className="w-12 h-12 rounded-full m-4"
                   src={post.owner.avatar}
                   alt="Avatar"
                 />
-                <h2 className="max-w-lg text-3xl font-semibold leading-normal text-gray-900 dark:text-red-700 ">
-                  {post.owner.fullName
-                    .split(" ")
-                    .map((name) => name.charAt(0).toUpperCase() + name.slice(1))
-                    .join(" ")}
-                </h2>
+                <div>
+                  <h2 className="text-lg font-semibold text-white">
+                    {post.owner.fullName
+                      .split(" ")
+                      .map(
+                        (name) => name.charAt(0).toUpperCase() + name.slice(1)
+                      )
+                      .join(" ")}
+                  </h2>
+                  <p className="text-sm text-gray-400">
+                    {formatTime(post.createdAt)}
+                  </p>
+                </div>
               </div>
 
-              {/* Post Image */}
-              <div className="relative rounded-3xl overflow-hidden">
+              {/* Post Content */}
+              <div className="p-2 pt-0 flex">
+                <div className=" w-auto">
+                  <h1 className="text-2xl font-semibold text-white mb-2 ml-20">
+                    {post.title}
+                  </h1>
+                  <p className="text-gray-300 mb-4 ml-20">{post.content}</p>
+                </div>
+
+                {/* Post Image */}
+              </div>
+              <div className="relative rounded-lg overflow-hidden mb-8 mr-4">
                 <img
-                  className="w-full h-auto rounded-md"
+                  className="w-auto h-64 mx-auto rounded-lg ml-20"
                   src={post.postImage}
                   alt={post.title}
                 />
               </div>
 
-              {/* Post Details */}
-              <div className="p-6 text-center">
-                <h1 className="text-3xl font-semibold leading-normal  dark:text-red-700 mb-2">
-                  <u className="text-glossy">Title:</u>{" "}
-                  <span className="text-white">{post.title}</span>
-                </h1>
-                <h1 className="text-xl font-semibold leading-normal  dark:text-red-700 mb-2">
-                  <u className="text-glossy">Content:</u>{" "}
-                  <span className="text-white">{post.content}</span>
-                </h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400 text-right">
-                  Uploaded on: {formatTime(post.createdAt)}
-                </p>
+              {/* Post Actions */}
+              <div className="flex items-center justify-between border-t border-gray-600 py-2 px-4 ml-20">
+                <div className="flex items-center">
+                  <button className="flex items-center text-gray-400 hover:text-white focus:outline-none">
+                    <svg
+                      className="w-5 h-5 mr-2"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
+                    </svg>
+                    <span>Like</span>
+                  </button>
+                  <button className="flex items-center text-gray-400 hover:text-white focus:outline-none ml-4">
+                    <svg
+                      className="w-5 h-5 mr-2"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                    </svg>
+                    <span>Comment</span>
+                  </button>
+                  <button
+                    className="flex items-center text-gray-400 hover:text-white focus:outline-none ml-48"
+                    onClick={toggleShareModal}
+                  >
+                    <svg
+                      className="w-5 h-5 mr-2"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M4 16v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    <span>Share</span>
+                  </button>
+                </div>
+                {showShareModal && (
+                  <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+                    <div className="bg-white rounded-lg p-6">
+                      <h2 className="text-lg font-semibold mb-4">
+                        Share this post
+                      </h2>
+                      <EmailShareButton
+                        url={window.location.href}
+                        className="mr-2 bg-blue-500 text-white px-4 py-2 rounded-lg"
+                      >
+                        Email
+                      </EmailShareButton>
+                      <FacebookShareButton
+                        url={window.location.href}
+                        className="mr-2 bg-blue-500 text-white px-4 py-2 rounded-lg"
+                      >
+                        Facebook
+                      </FacebookShareButton>
+                      <TwitterShareButton
+                        url={window.location.href}
+                        className="mr-2 bg-blue-500 text-white px-4 py-2 rounded-lg"
+                      >
+                        Twitter
+                      </TwitterShareButton>
+                      <WhatsappShareButton
+                        url={window.location.href}
+                        className="mr-2 bg-blue-500 text-white px-4 py-2 rounded-lg"
+                      >
+                        WhatsApp
+                      </WhatsappShareButton>
+                      <button
+                        className="mt-4 bg-gray-400 text-white px-4 py-2 rounded-lg"
+                        onClick={toggleShareModal}
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ) : (
-            <p className="text-gray-600 text-xl">Loading...</p>
+            <p className="text-gray-400 text-xl">Loading...</p>
           )}
         </div>
       </div>

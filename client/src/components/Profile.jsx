@@ -228,7 +228,7 @@ const Profile = () => {
                     </button>
                   )}
                 </p>
-                <div className="flex justify-end absolute bottom-0 right-0 p-2">
+                <div className="flex justify-end bottom-0 right-0 p-2">
                   <p className="text-white">{formatDate(post.createdAt)}</p>
                 </div>
                 <button
