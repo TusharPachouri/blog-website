@@ -1,23 +1,8 @@
 {
-    "builds": [
+  "rewrites": [
       {
-        "src": "./src",
-        "use": "@vercel/static-build",
-        "config": {
-          "outputPath": "./dist"
-        }
+          "source": "/(.*)",
+          "destination": "/index.html"
       }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/index.html"
-      }
-    ],
-    "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/index.html"
-        }
-      ]
-  }
+    ]
+}
