@@ -11,7 +11,7 @@ import {
 const createPost = asyncHandler(async (req, res) => {
   const { title, content, userId } = req.body;
 
-  if (!title || !content)
+  if (!title || !content || !title.trim() || !content.trim())
     throw new ApiError(400, "Title and content are required");
   let postImage = null;
   if (req.file) {
