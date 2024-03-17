@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import { inject } from "@vercel/analytics";
+import { injectSpeedInsights } from "@vercel/speed-insights";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -63,6 +65,11 @@ app.use(
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
+
+// vercel:-
+inject();
+injectSpeedInsights();
+
 
 // routers
 import userRouter from "./routes/user.routes.js";
