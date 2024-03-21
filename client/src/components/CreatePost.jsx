@@ -141,11 +141,14 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-gray-100 rounded shadow-lg">
-      <h2 className="text-2xl font-semibold mb-4">Create a New Post</h2>
+    <div className="max-w-md mx-auto mt-8 p-6 bg-gray-400 rounded shadow-lg">
+      <h2 className="text-3xl text-slate-800 font-semibold mb-4">Blog Post</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="title">
+          <label
+            className="block text-slate-800 font-bold mb-2"
+            htmlFor="title"
+          >
             Title:
           </label>
           <input
@@ -157,17 +160,10 @@ const CreatePost = () => {
             className="w-full px-3 py-2 leading-tight border rounded appearance-none focus:outline-none focus:shadow-outline"
             required
           />
-          {/* <button
-            type="button"
-            onClick={handleGenerateContent}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Generate Content
-          </button> */}
         </div>
         <div className="mb-4">
           <label
-            className="block text-gray-700 font-bold mb-2"
+            className="block text-slate-800 font-bold mb-2"
             htmlFor="content"
           >
             Content:
@@ -187,13 +183,13 @@ const CreatePost = () => {
         <button
           type="button"
           onClick={handleGenerateContent}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+          className="bg-green-500 hover:bg-green-700 text-slate-800 rounded-xl font-bold py-2 px-4 focus:outline-none focus:shadow-outline mb-4"
         >
-          Generate Content
+          Auto Generate Content
         </button>
         <div className="mb-4">
           <label
-            className="block text-gray-700 font-bold mb-2"
+            className="block text-slate-800 font-bold mb-2"
             htmlFor="postImage"
           >
             Post Image:
@@ -203,14 +199,14 @@ const CreatePost = () => {
             name="postImage"
             id="postImage"
             onChange={handleImageChange}
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="appearance-none border rounded w-full py-2 px-3 text-slate-800 leading-tight focus:outline-none focus:shadow-outline"
             accept="image/*"
-            // required
+            required
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-blue-500 rounded-xl hover:bg-blue-700 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
           disabled={loading} // Disable button when loading
         >
           {loading ? (
