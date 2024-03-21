@@ -29,6 +29,7 @@ const CreatePost = () => {
       } else {
         // Clear the interval when all words have been written
         clearInterval(intervalId);
+        toast.success("Content Generated Successfully!");
       }
     }, 100); // Adjust the interval duration as needed
   }
@@ -130,10 +131,10 @@ const CreatePost = () => {
         writeContentWordByWord(data.data.content, (word) => {
           setGeneratedContent((prevContent) => prevContent + word + " ");
         });
-        toast.success("Content Generated Successfully!");
       } else {
         console.error("Failed to generate content");
-        toast.error("Error while generating the content");}
+        toast.error("Error while generating the content");
+      }
     } catch (error) {
       console.error("Error:", error);
     }
