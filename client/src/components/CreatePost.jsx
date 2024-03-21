@@ -113,7 +113,7 @@ const CreatePost = () => {
   const handleGenerateContent = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/v1/gemini/generate",
+        `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/gemini/generate`,
         {
           method: "POST",
           headers: {
