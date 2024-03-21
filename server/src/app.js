@@ -76,11 +76,14 @@ import userRouter from "./routes/user.routes.js";
 import postRouter from "./routes/post.routes.js";
 import commentRouter from "./routes/comment.routes.js";
 import contactRouter from "./routes/contact.routes.js";
+import geminiRouter from "./routes/gemini.routes.js";
 
 //using on
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/comments", commentRouter);
-app.use("/api/v1/contacts", contactRouter);
+app.use("/api/v1/contacts", contactRouter);        
+app.use("/api/v1/gemini", geminiRouter);        
+
 
 export { app };

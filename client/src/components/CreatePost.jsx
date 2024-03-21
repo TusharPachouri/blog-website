@@ -8,6 +8,28 @@ const CreatePost = () => {
   });
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState(null); // State to store the user ID
+  const [generatedContent, setGeneratedContent] = useState("");
+
+  function writeContentWordByWord(content, callback) {
+    // Split the content into an array of words
+    const words = content.split(/\s+/);
+
+    // Initialize a counter to keep track of the current word being written
+    let i = 0;
+
+    // Use setInterval to simulate the writing process
+    const intervalId = setInterval(() => {
+      // Check if all words have been written
+      if (i < words.length) {
+        // Invoke the callback function with the current word
+        callback(words[i]);
+        i++; // Move to the next word
+      } else {
+        // Clear the interval when all words have been written
+        clearInterval(intervalId);
+      }
+    }, 100); // Adjust the interval duration as needed
+  }
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -60,7 +82,7 @@ const CreatePost = () => {
 
     const formDataToSend = new FormData();
     formDataToSend.append("title", formData.title);
-    formDataToSend.append("content", formData.content);
+    formDataToSend.append("content", formData.content || generatedContent);
     formDataToSend.append("postImage", formData.postImage);
     formDataToSend.append("userId", userId); // Add userId to the formData
 
@@ -88,6 +110,32 @@ const CreatePost = () => {
     }
   };
 
+  const handleGenerateContent = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/gemini/generate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title: formData.title }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        writeContentWordByWord(data.data.content, (word) => {
+          setGeneratedContent((prevContent) => prevContent + word + " ");
+        });
+      } else {
+        console.error("Failed to generate content");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-gray-100 rounded shadow-lg">
       <h2 className="text-2xl font-semibold mb-4">Create a New Post</h2>
@@ -105,6 +153,13 @@ const CreatePost = () => {
             className="w-full px-3 py-2 leading-tight border rounded appearance-none focus:outline-none focus:shadow-outline"
             required
           />
+          {/* <button
+            type="button"
+            onClick={handleGenerateContent}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Generate Content
+          </button> */}
         </div>
         <div className="mb-4">
           <label
@@ -116,12 +171,22 @@ const CreatePost = () => {
           <textarea
             name="content"
             id="content"
-            value={formData.content}
-            onChange={handleChange}
+            value={generatedContent || formData.content}
+            onChange={(e) => {
+              setFormData({ ...formData, content: e.target.value });
+              setGeneratedContent(""); // Clear the generated content when manually editing
+            }}
             className="w-full px-3 py-2 leading-tight border rounded appearance-none focus:outline-none focus:shadow-outline"
             required
           />
         </div>
+        <button
+          type="button"
+          onClick={handleGenerateContent}
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+        >
+          Generate Content
+        </button>
         <div className="mb-4">
           <label
             className="block text-gray-700 font-bold mb-2"
@@ -136,7 +201,7 @@ const CreatePost = () => {
             onChange={handleImageChange}
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             accept="image/*"
-            required
+            // required
           />
         </div>
         <button
