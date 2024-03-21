@@ -11,8 +11,8 @@ const sections = [
     items: ["Write for Us", "Become a Contributor", "Advertise with Us"],
   },
   {
-    title: "Company",
-    items: ["About Us", "Our Team", "Contact Us"],
+    title: "Contact",
+    items: ["Email: tusharpachouri@gmail.com", "Phone: 82 18 504 473"],
   },
   {
     title: "Legal",
@@ -25,8 +25,8 @@ const sections = [
     ],
   },
   {
-    title: "Contact",
-    items: ["Email: tusharpachouri001@gmail.com", "Phone: 82 18 504 473"],
+    title: "Company",
+    items: ["About Us", "Our Team", "Contact Us"],
   },
 ];
 

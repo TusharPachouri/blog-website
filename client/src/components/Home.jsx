@@ -2,10 +2,31 @@ import Posts from "./Posts";
 import CreatePost from "./CreatePost";
 import { useState, useEffect } from "react";
 import background from "../assets/img/backgroundImage.jpg";
+import { useRef } from "react";
+import Typed from "typed.js";
 
 const Home = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isCreatePostVisible, setIsCreatePostVisible] = useState(false);
+
+  const el = useRef(null);
+
+  useEffect(() => {
+    const typed = new Typed(el.current, {
+      strings: ["Blog Posts", "Stories to Inspire", "Knowledge Hub"],
+      startDelay: 300,
+      typeSpeed: 100,
+      backSpeed: 50,
+      backDelay: 1000,
+      loop: true,
+      showCursor: true,
+      cursorChar: "|",
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -61,13 +82,13 @@ const Home = () => {
     <>
       <div
         className="flex flex-col items-center justify-center mt-0 px-10 "
-        style={{ 
-          backgroundImage: `url(${background})`
-         }}
+        style={{
+          backgroundImage: `url(${background})`,
+        }}
       >
         {loggedIn && (
           <>
-            <h1 className="font-bold text-red-700 text-4xl mb-2 mt-2 px-1">
+            <h1 className="text-4xl md:text-4xl font-bold text-center mb-4 text-gray-500">
               Create a New Post
             </h1>
             {isCreatePostVisible ? (
@@ -91,9 +112,14 @@ const Home = () => {
             )}
           </>
         )}
-        <h1 className="font-bold text-red-700 text-4xl mb-2 mt-2 px-10">
-          Posts
-        </h1>
+        <div className="flex flex-col items-center py-8">
+          <h1 className="text-4xl md:text-6xl font-bold text-center mb-4 text-gray-500">
+            Welcome to our <span ref={el} />
+          </h1>
+          <p className="text-lg md:text-xl text-gray-400 text-center">
+            Explore a world of captivating stories and insightful knowledge.
+          </p>
+        </div>
         <Posts />
       </div>
     </>

@@ -12,10 +12,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col w-full min-h-screen">
       <BrowserRouter>
         <Nav />
-        <div className="flex-grow pt-16 ">
+        <div className="flex-grow w-full"> {/* Adjusted padding for mobile */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutUs />} />
@@ -33,49 +33,3 @@ function App() {
 }
 
 export default App;
-// import Nav from "./components/Nav";
-// import SignUp from "./components/SignUp";
-// import Login from "./components/Login";
-// import Home from "./components/Home";
-// import Contact from "./components/Contact";
-// import Profile from "./components/Profile";
-// import Logout from "./components/Logout";
-// import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-// import { useState } from "react";
-
-// function App() {
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-//   const handleLogin = () => {
-//     // Perform login logic and set isLoggedIn to true
-//     setIsLoggedIn(true);
-//   };
-
-//   const handleLogout = () => {
-//     // Perform logout logic and set isLoggedIn to false
-//     setIsLoggedIn(false);
-//   };
-
-//   return (
-//     <div className="App">
-//       <BrowserRouter>
-//         <Nav isLoggedIn={isLoggedIn} onLogout={handleLogout} />
-//         <Routes>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/about" element={<h1>About</h1>} />
-//           <Route path="/contact" element={<Contact />} />
-//           <Route path="/login" element={<Login onLogin={handleLogin} />} />
-//           <Route path="/signup" element={<SignUp />} />
-//           {isLoggedIn ? (
-//             <Route path="/profile" element={<Profile />} />
-//           ) : (
-//             <Navigate to="/login" />
-//           )}
-//           <Route path="/logout" element={<Logout onLogout={handleLogout} />} />
-//         </Routes>
-//       </BrowserRouter>
-//     </div>
-//   );
-// }
-
-// export default App;
