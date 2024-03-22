@@ -141,8 +141,10 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-gray-400 rounded shadow-lg">
-      <h2 className="text-3xl text-slate-800 font-semibold mb-4">Blog Post</h2>
+    <div className="max-w-md mx-auto mt-8 p-6 bg-gray-400 rounded-xl shadow-2xl">
+      <h2 className="text-3xl text-slate-700 text-center font-bold mb-4">
+        Blog Post
+      </h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label
