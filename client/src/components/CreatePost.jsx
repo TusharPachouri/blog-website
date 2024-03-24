@@ -113,6 +113,9 @@ const CreatePost = () => {
 
   const handleGenerateContent = async () => {
     setGeneratedContent("");
+    const textareaElement = document.getElementById("content");
+    textareaElement.style.height = `60px`;
+
     try {
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/gemini/generate`,
@@ -140,8 +143,8 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-gray-400 rounded-xl shadow-2xl">
-      <h2 className="text-3xl text-slate-700 text-center font-bold mb-4">
+    <div className="mx-auto mt-8 p-6 bg-gray-400 rounded-xl shadow-2xl sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
+      <h2 className="text-3xl underline text-slate-700 text-center font-bold mb-4">
         Blog Post
       </h2>
       <form onSubmit={handleSubmit}>
