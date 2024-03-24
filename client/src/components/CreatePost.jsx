@@ -13,25 +13,23 @@ const CreatePost = () => {
   const [generatedContent, setGeneratedContent] = useState("");
 
   function writeContentWordByWord(content, callback) {
-    // Split the content into an array of words
     const words = content.split(/\s+/);
-
-    // Initialize a counter to keep track of the current word being written
     let i = 0;
+    const textareaElement = document.getElementById("content");
 
-    // Use setInterval to simulate the writing process
     const intervalId = setInterval(() => {
-      // Check if all words have been written
       if (i < words.length) {
-        // Invoke the callback function with the current word
         callback(words[i]);
-        i++; // Move to the next word
+        i++;
+
+        // Adjust the textarea height and width
+        textareaElement.style.height = "auto";
+        textareaElement.style.height = `${textareaElement.scrollHeight}px`;
       } else {
-        // Clear the interval when all words have been written
         clearInterval(intervalId);
         toast.success("Content Generated Successfully!");
       }
-    }, 100); // Adjust the interval duration as needed
+    }, 100);
   }
 
   useEffect(() => {
@@ -114,6 +112,7 @@ const CreatePost = () => {
   };
 
   const handleGenerateContent = async () => {
+    setGeneratedContent("");
     try {
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/gemini/generate`,
@@ -159,53 +158,60 @@ const CreatePost = () => {
             id="title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full px-3 py-2 leading-tight border rounded appearance-none focus:outline-none focus:shadow-outline"
+            className="w-full px-3 dark:bg-gray-500 py-2 leading-tight border rounded appearance-none focus:outline-none focus:shadow-outline"
             required
           />
         </div>
         <div className="mb-4">
+          {/* This is a label for the textarea */}
           <label
             className="block text-slate-800 font-bold mb-2"
             htmlFor="content"
           >
             Content:
           </label>
+
+          {/* This is the textarea input field */}
           <textarea
             name="content"
             id="content"
             value={generatedContent || formData.content}
             onChange={(e) => {
               setFormData({ ...formData, content: e.target.value });
-              setGeneratedContent(""); // Clear the generated content when manually editing
+              setGeneratedContent("");
             }}
-            className="w-full px-3 py-2 leading-tight border rounded appearance-none focus:outline-none focus:shadow-outline"
+            className="w-full px-3 py-2 dark:bg-gray-500 leading-tight border rounded appearance-none focus:outline-none focus:shadow-outline resize"
             required
           />
         </div>
         <button
           type="button"
           onClick={handleGenerateContent}
-          className="bg-green-500 hover:bg-green-700 text-slate-800 rounded-xl font-bold py-2 px-4 focus:outline-none focus:shadow-outline mb-4"
+          className="bg-green-600 hover:bg-green-700 text-slate-900 rounded-xl font-bold py-2 px-4 focus:outline-none focus:shadow-outline mb-4"
         >
           Auto Generate Content
         </button>
-        <div className="mb-4">
+        <fieldset className="w-full space-y-1 dark:text-gray-800">
           <label
+            htmlFor="files"
             className="block text-slate-800 font-bold mb-2"
-            htmlFor="postImage"
           >
-            Post Image:
+            Attachments:
           </label>
-          <input
-            type="file"
-            name="postImage"
-            id="postImage"
-            onChange={handleImageChange}
-            className="appearance-none border rounded w-full py-2 px-3 text-slate-800 leading-tight focus:outline-none focus:shadow-outline"
-            accept="image/*"
-            required
-          />
-        </div>
+          <div className="flex">
+            <input
+              type="file"
+              name="files"
+              id="files"
+              className="px-1 py-1 border-2 border-dashed rounded-md font-bold dark:border-gray-300 dark:text-gray-800 dark:bg-gray-500"
+              onChange={handleImageChange} // Assuming handleImageChange is defined elsewhere
+              accept="image/*"
+              required
+            />
+          </div>
+        </fieldset>
+        <br></br>
+
         <button
           type="submit"
           className="bg-blue-500 rounded-xl hover:bg-blue-700 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
