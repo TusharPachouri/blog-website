@@ -8,6 +8,7 @@ import Profile from "./components/Profile";
 import AboutUs from "./components/AboutUs";
 import Footer from "./components/Footer";
 import Post from "./components/Post";
+import Search from "./components/Search";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/post/:postId" element={<Post />} />
+            <Route path="/search/:search" element={<Search />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
