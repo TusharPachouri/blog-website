@@ -4,6 +4,7 @@ import {
   getPosts,
   getLoggedInUserAllPosts,
   getPostById,
+  getPostsByUsername,
   updatePostById,
   deletePostById,
 } from "../controllers/post.controllers.js";
@@ -19,6 +20,7 @@ router.route("/").get(getPosts);
 router.route("/user").get(verifyJWT, getLoggedInUserAllPosts);
 
 router.route("/:postId").get(getPostById);
+router.route("/user/:username").get(getPostsByUsername);
 
 router
   .route("/update/:postId")

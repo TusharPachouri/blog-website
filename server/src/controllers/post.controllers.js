@@ -35,7 +35,10 @@ const createPost = asyncHandler(async (req, res) => {
 
 const getPosts = asyncHandler(async (req, res) => {
   try {
-    const posts = await Post.find().populate("owner", "username avatar fullName");
+    const posts = await Post.find().populate(
+      "owner",
+      "username avatar fullName"
+    );
     res.status(200).json(new ApiResponse(200, { posts }));
   } catch (error) {
     console.log("Error while fetching the posts: ", error.message);
@@ -72,6 +75,30 @@ const getPostById = asyncHandler(async (req, res) => {
   if (!post) throw new ApiError(404, "Post not found");
   res.status(200).json(new ApiResponse(200, { post }, "Post found"));
 });
+
+const getPostsByUsername = asyncHandler(async (req, res) => {
+  const { username } = req.params;
+  if (!username) throw new ApiError(400, "Username is required");
+
+  try {
+    const posts = await Post.find({ 'owner': { $exists: true } })
+      .populate({
+        path: "owner",
+        match: { username },
+        select: "username avatar fullName"
+      })
+      .exec();
+
+    if (!posts.length) throw new ApiError(404, "No posts found for this user");
+
+    res.status(200).json(new ApiResponse(200, { posts }, "Posts found"));
+  } catch (error) {
+    // Handle database errors or other errors
+    throw new ApiError(500, "Internal Server Error", error);
+  }
+});
+
+
 
 const updatePostById = asyncHandler(async (req, res) => {
   const { postId } = req.params;
@@ -119,6 +146,7 @@ export {
   getPosts,
   getLoggedInUserAllPosts,
   getPostById,
+  getPostsByUsername,
   updatePostById,
   deletePostById,
 };

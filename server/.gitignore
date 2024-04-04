@@ -24,4 +24,3 @@ dist-ssr
 *.sw?
 # Environment variables
 .env
-.env.example
