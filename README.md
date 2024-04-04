@@ -53,3 +53,25 @@ The client-side will be running on `http://localhost:5173/`, and the server will
 ## Contributing
 
 Contributions to the project are welcome. Please follow the guidelines outlined in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+## Screenshots
+
+## Home Page :-
+
+![Screenshot 1](/screenshots/screenshot.png)
+
+## SignUp Page :-
+
+![Screenshot 2](/screenshots/screenshot1.png)
+
+## AI Generated Content :-
+
+![Screenshot 2](/screenshots/screenshot2.png)
+
+## After LogIn :-
+
+![Screenshot 2](/screenshots/screenshot3.png)
+
+## Profile Page :-
+
+![Screenshot 2](/screenshots/screenshot4.png)
