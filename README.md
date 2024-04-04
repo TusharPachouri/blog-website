@@ -58,20 +58,20 @@ Contributions to the project are welcome. Please follow the guidelines outlined 
 
 ## Home Page :-
 
-![Screenshot 1](/screenshots/screenshot.png)
+![Screenshot 1](/Screenshots/screenshot.png)
 
 ## SignUp Page :-
 
-![Screenshot 2](/screenshots/screenshot1.png)
+![Screenshot 2](/Screenshots/screenshot1.png)
 
 ## AI Generated Content :-
 
-![Screenshot 2](/screenshots/screenshot2.png)
+![Screenshot 2](/Screenshots/screenshot2.png)
 
 ## After LogIn :-
 
-![Screenshot 2](/screenshots/screenshot3.png)
+![Screenshot 2](/Screenshots/screenshot3.png)
 
 ## Profile Page :-
 
-![Screenshot 2](/screenshots/screenshot4.png)
+![Screenshot 2](/Screenshots/screenshot4.png)
