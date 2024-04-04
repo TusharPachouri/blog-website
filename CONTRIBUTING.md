@@ -25,7 +25,7 @@ To start contributing to BlogWebsite, follow these steps:
 2. **Clone the Repository**: Clone your forked repository to your local machine using the following command:
 
    ```bash
-   git clone https://github.com/YourUsername/blog-website.git
+   git clone https://github.com/TusharPachouri/blog-website.git
 
 3. **Create a Branch**: Create a new branch for your contribution using a descriptive name. For example:
 
