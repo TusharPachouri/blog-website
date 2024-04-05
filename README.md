@@ -29,7 +29,7 @@ The client-side encompasses various pages and functionalities:
 - **Contact Page**: Allows users to send messages via email using Nodemailer.
 - **Profile Page**: Enables users to manage their profile, delete posts, and log out.
 - **Login Page**: Allows existing users to sign in securely by entering their credentials.
-- **Signup Page**: Enables new users to create an account by providing necessary information.
+- **SignUp Page**: Enables new users to create an account by providing necessary information.
 - **Search Bar**: Enables users to search for specific content within the website by entering keywords or phrases.
 
 ## Deployment

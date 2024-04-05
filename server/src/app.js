@@ -43,7 +43,6 @@ app.use(
     //   "X-Requested-With,content-type, Authorization, x-auth-token",
   })
 );
-
 // const options = [
 //   cors({
 //     origin: "*",
