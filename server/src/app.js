@@ -27,6 +27,7 @@ app.use(
     origin: [
       "*",
       "https://blog-website-client-two.vercel.app/",
+      "https://blog.tusharpachouri.tech/",
       "https://blog-website-client-two.vercel.app/login/",
       "https://blog-website-client-two.vercel.app/contact/",
       "https://blog-website-client-two.vercel.app/signup",
