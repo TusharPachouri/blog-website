@@ -62,10 +62,10 @@ const Nav = () => {
             <img
               src="https://flowbite.com/docs/images/logo.svg"
               className="h-8"
-              alt="BlogWebsite Logo"
+              alt="NebulaBlogs Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white ml-2">
-              BlogWebsite
+              NebulaBlogs
             </span>
           </a>
         </div>
