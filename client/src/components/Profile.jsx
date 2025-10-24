@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logout from "./Logout";
-import backgroundImage from "../assets/img/backgroundImage.jpg"; // Replace this with the path to your background image
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -119,40 +118,41 @@ const Profile = () => {
   };
 
   return (
-    <div
-      className="profile-container min-h-screen flex flex-col bg-cover"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
-      {/* User Details */}
-      {isLoading && (
-        <div className="flex justify-center items-center h-screen">
-          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-        </div>
-      )}
-      <div className="bg-100 rounded-xl py-8 px-4 relative mt-16">
-        {userData && (
-          <div className="max-w-lg mx-auto overflow-hidden rounded-3xl shadow-lg bg-black relative">
-            <div
-              className="profile-cover w-full h-48 bg-cover bg-center relative rounded-3xl"
-              style={{ backgroundImage: `url(${userData.coverImage})` }}
-            >
-              <div className="absolute left-0 top-0 h-full w-1/2">
-                {/* Empty div to create space for the avatar */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-60 right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 lg:px-10">
+        {/* User Details */}
+        {isLoading && (
+          <div className="flex justify-center items-center h-screen">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+          </div>
+        )}
+
+        <div className="w-full max-w-4xl mx-auto py-16">
+          {userData && (
+            <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 shadow-2xl overflow-hidden">
+              <div
+                className="profile-cover w-full h-48 bg-cover bg-center relative rounded-t-3xl"
+                style={{ backgroundImage: `url(${userData.coverImage})` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+                  <img
+                    className="w-32 h-32 rounded-full border-4 border-white/20 shadow-2xl"
+                    src={userData.avatar}
+                    alt="Avatar"
+                  />
+                </div>
               </div>
-              <div className="absolute top-1/2 transform -translate-y-.2 ml-50">
-                <img
-                  className="w-32 h-32 rounded-full border-4 border-blue-300"
-                  src={userData.avatar}
-                  alt="Avatar"
-                />
-              </div>
-            </div>
-            <div className="px-6 py-4">
-              <div className="text-center">
-                <div className="font-bold text-white text-xl mb-2 text-glossy  ">
-                  <div className="border-t-2 border-blue-300 "></div>
-                  <b className=" text-2xl text-blue-300">Name: </b>{" "}
-                  <span className="text-xl text-glossy">
+              <div className="px-8 py-8 pt-16">
+                <div className="text-center">
+                  <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-4">
                     {userData.fullName
                       .split(" ")
                       .map(
@@ -161,104 +161,167 @@ const Profile = () => {
                           word.slice(1).toLowerCase()
                       )
                       .join(" ")}
-                  </span>
+                  </h1>
+                  <div className="space-y-3">
+                    <p className="text-white/80 text-lg">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-blue-300 font-semibold">
+                        Email:{" "}
+                      </span>
+                      <span className="text-white">{userData.email}</span>
+                    </p>
+                    <p className="text-white/80 text-lg">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-blue-300 font-semibold">
+                        Username:{" "}
+                      </span>
+                      <span className="text-white">@{userData.username}</span>
+                    </p>
+                  </div>
                 </div>
-                <p className="  text-white text-base text-glossy">
-                  <b className=" text-2xl text-blue-300">Email: </b>
-                  <span className="text-xl ">{userData.email}</span>
-                </p>
-                <p className=" text-white text-base text-glossy">
-                  <b className=" text-2xl text-blue-300">Username: </b>{" "}
-                  <span className="text-xl ">{userData.username}</span>
-                </p>
               </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
 
-      {/* User Posts */}
-      <div className="container mx-auto py-8">
-        <h2 className="text-2xl font-semibold text-white mb-4">
-          <b>My Posts: </b>
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {userPosts.map((post) => (
-            <div
-              key={post._id}
-              className="dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="relative">
-                <img
-                  className="w-full h-48 object-cover"
-                  src={post.postImage}
-                  alt={post.title}
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                  <Link
-                    to={`/post/${post._id}`}
-                    className="bg-white text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-200 transition-colors duration-300"
-                  >
-                    Read More
-                  </Link>
-                </div>
-              </div>
-              <div className="p-4">
-                <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-2">
-                  <b className="dark:text-gray-400">Title: </b> {post.title}
-                </h1>
-                <h2 className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                  <b>By: </b>{" "}
-                  <span className="dark:text-white">
-                    {post.owner.fullName
-                      .split(" ")
-                      .map(
-                        (word) =>
-                          word.charAt(0).toUpperCase() +
-                          word.slice(1).toLowerCase()
-                      )
-                      .join(" ")}
-                  </span>
-                </h2>
-                <h2 className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                  <b>Username:</b>{" "}
-                  <span className="dark:text-white">{post.owner.username}</span>
-                </h2>
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                  <b>Content:</b>{" "}
-                  {expandedPosts.includes(post._id)
-                    ? post.content
-                    : `${post.content.slice(0, 100)}...`}
-                  {post.content.length > 100 && (
-                    <button
-                      className="text-blue-600 hover:underline focus:outline-none"
-                      onClick={() => toggleExpansion(post._id)}
+        {/* User Posts */}
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+              My{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+                Posts
+              </span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto rounded-full"></div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {userPosts.map((post) => (
+              <div
+                key={post._id}
+                className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 group"
+              >
+                <div className="relative">
+                  <img
+                    className="w-full h-48 object-cover"
+                    src={post.postImage}
+                    alt={post.title}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <Link
+                      to={`/post/${post._id}`}
+                      className="bg-white/20 backdrop-blur-sm text-white font-semibold py-3 px-6 rounded-2xl hover:bg-white/30 transition-all duration-300 border border-white/20"
                     >
-                      {expandedPosts.includes(post._id)
-                        ? "Show Less"
-                        : "Read More"}
-                    </button>
-                  )}
-                </p>
-                <div className="flex justify-end bottom-0 right-0 p-2">
-                  <p className="text-white">{formatDate(post.createdAt)}</p>
+                      Read More
+                    </Link>
+                  </div>
                 </div>
-                <button
-                  onClick={() => handleDeletePost(post._id)}
-                  className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                >
-                  Delete
-                </button>
+                <div className="p-6">
+                  <h1 className="mb-3 text-2xl font-bold text-white line-clamp-2">
+                    {post.title}
+                  </h1>
+                  <div className="mb-4 space-y-2">
+                    <p className="text-white/70">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-blue-300 font-semibold">
+                        By:{" "}
+                      </span>
+                      <span className="text-white">
+                        {post.owner.fullName
+                          .split(" ")
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() +
+                              word.slice(1).toLowerCase()
+                          )
+                          .join(" ")}
+                      </span>
+                    </p>
+                    <p className="text-white/70">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-blue-300 font-semibold">
+                        Username:{" "}
+                      </span>
+                      <span className="text-white">@{post.owner.username}</span>
+                    </p>
+                  </div>
+                  <p className="mb-4 text-white/80">
+                    {expandedPosts.includes(post._id)
+                      ? post.content
+                      : `${post.content.slice(0, 100)}...`}
+                    {post.content.length > 100 && (
+                      <button
+                        className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 hover:underline focus:outline-none ml-2"
+                        onClick={() => toggleExpansion(post._id)}
+                      >
+                        {expandedPosts.includes(post._id)
+                          ? "Show Less"
+                          : "Read More"}
+                      </button>
+                    )}
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <p className="text-white/60 text-sm">
+                      {formatDate(post.createdAt)}
+                    </p>
+                    <button
+                      onClick={() => handleDeletePost(post._id)}
+                      className="group relative px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white font-medium rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/25"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <span className="relative z-10">Delete</span>
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Logout Button */}
-      <div className="fixed bottom-4 right-4 ">
-        <Logout />
+      {/* Floating Elements */}
+      <div className="fixed bottom-8 right-8 z-20">
+        <div className="flex flex-col gap-3">
+          <button className="w-12 h-12 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 hover:scale-110">
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 15l7-7 7 7"
+              />
+            </svg>
+          </button>
+          <div className="bg-white/5 backdrop-blur-sm border border-white/20 rounded-full p-3">
+            <Logout />
+          </div>
+        </div>
       </div>
+
+      <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+          
+          * {
+            font-family: 'Inter', sans-serif;
+          }
+          
+          .animate-float {
+            animation: float 6s ease-in-out infinite;
+          }
+          
+          @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+          }
+          
+          .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+          }
+        `}</style>
     </div>
   );
 };

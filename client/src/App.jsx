@@ -19,7 +19,7 @@ function App() {
         <div className="flex-grow w-full"> {/* Adjusted padding for mobile */}
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutUs />} />
+            <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/post/:postId" element={<Post />} />
             <Route path="/search/:search" element={<Search />} />
             <Route path="/contact" element={<Contact />} />

@@ -9,7 +9,7 @@ const CreatePost = () => {
     postImage: null,
   });
   const [loading, setLoading] = useState(false);
-  const [userId, setUserId] = useState(null); // State to store the user ID
+  const [userId, setUserId] = useState(null);
   const [generatedContent, setGeneratedContent] = useState("");
 
   function writeContentWordByWord(content, callback) {
@@ -21,13 +21,11 @@ const CreatePost = () => {
       if (i < words.length) {
         callback(words[i]);
         i++;
-
-        // Adjust the textarea height and width
         textareaElement.style.height = "auto";
         textareaElement.style.height = `${textareaElement.scrollHeight}px`;
       } else {
         clearInterval(intervalId);
-        toast.success("Content Generated Successfully!");
+        toast.success("✨ Content Generated Successfully!");
       }
     }, 100);
   }
@@ -53,14 +51,10 @@ const CreatePost = () => {
           }
         );
         const data = await response.json();
-        if (response.ok) {
-          if (data && data.data) {
-            setUserId(data.data._id); // Set the user ID
-          } else {
-            console.error("User details not found in response data:", data);
-          }
+        if (response.ok && data?.data) {
+          setUserId(data.data._id);
         } else {
-          console.error("Response not OK:", response);
+          console.error("Error fetching user details:", data);
         }
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -68,7 +62,7 @@ const CreatePost = () => {
     };
 
     fetchUserDetails();
-  }, []); // Empty dependency array to run once on component mount
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -85,11 +79,10 @@ const CreatePost = () => {
     formDataToSend.append("title", formData.title);
     formDataToSend.append("content", formData.content || generatedContent);
     formDataToSend.append("postImage", formData.postImage);
-    formDataToSend.append("userId", userId); // Add userId to the formData
+    formDataToSend.append("userId", userId);
 
     try {
       setLoading(true);
-
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_HOST}/api/v1/posts/create`,
         {
@@ -99,13 +92,16 @@ const CreatePost = () => {
       );
 
       if (response.ok) {
+        toast.success("🚀 Post Created Successfully!");
         setFormData({ title: "", content: "", postImage: null });
-        window.location.reload();
+        setGeneratedContent("");
+        setTimeout(() => window.location.reload(), 1500);
       } else {
-        console.error("Failed to create post");
+        toast.error("❌ Failed to create post");
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("⚠️ Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -131,29 +127,27 @@ const CreatePost = () => {
       if (response.ok) {
         const data = await response.json();
         writeContentWordByWord(data.data.content, (word) => {
-          setGeneratedContent((prevContent) => prevContent + word + " ");
+          setGeneratedContent((prev) => prev + word + " ");
         });
       } else {
-        console.error("Failed to generate content");
-        toast.error("Error while generating the content");
+        toast.error("⚠️ Error while generating content");
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("⚠️ Failed to generate content");
     }
   };
 
   return (
-    <div className="mx-auto mt-8 p-6 bg-gray-400 rounded-xl shadow-2xl sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
-      <h2 className="text-3xl underline text-slate-700 text-center font-bold mb-4">
-        Blog Post
+    <div className="mx-auto mt-10 p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full sm:max-w-md md:max-w-lg lg:max-w-xl transition-all duration-300">
+      <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-6">
+        ✍️ Create a New Blog Post
       </h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label
-            className="block text-slate-800 font-bold mb-2"
-            htmlFor="title"
-          >
-            Title:
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Title */}
+        <div>
+          <label className="block text-gray-700 dark:text-gray-300 mb-2 font-semibold" htmlFor="title">
+            Title
           </label>
           <input
             type="text"
@@ -161,20 +155,16 @@ const CreatePost = () => {
             id="title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full px-3 dark:bg-gray-500 py-2 leading-tight border rounded appearance-none focus:outline-none focus:shadow-outline"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
             required
           />
         </div>
-        <div className="mb-4">
-          {/* This is a label for the textarea */}
-          <label
-            className="block text-slate-800 font-bold mb-2"
-            htmlFor="content"
-          >
-            Content:
-          </label>
 
-          {/* This is the textarea input field */}
+        {/* Content */}
+        <div>
+          <label className="block text-gray-700 dark:text-gray-300 mb-2 font-semibold" htmlFor="content">
+            Content
+          </label>
           <textarea
             name="content"
             id="content"
@@ -183,69 +173,59 @@ const CreatePost = () => {
               setFormData({ ...formData, content: e.target.value });
               setGeneratedContent("");
             }}
-            className="w-full px-3 py-2 dark:bg-gray-500 leading-tight border rounded appearance-none focus:outline-none focus:shadow-outline resize"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none resize-y"
+            required
+          />
+          <button
+            type="button"
+            onClick={handleGenerateContent}
+            className="mt-3 bg-gradient-to-r from-green-500 to-green-700 text-white font-semibold px-4 py-2 rounded-lg shadow hover:from-green-600 hover:to-green-800 transition-all"
+          >
+            ⚡ Auto Generate Content
+          </button>
+        </div>
+
+        {/* File Upload */}
+        <div>
+          <label className="block text-gray-700 dark:text-gray-300 mb-2 font-semibold" htmlFor="files">
+            Upload Image
+          </label>
+          <input
+            type="file"
+            id="files"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full px-3 py-2 border-2 border-dashed border-gray-400 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
-        <button
-          type="button"
-          onClick={handleGenerateContent}
-          className="bg-green-600 hover:bg-green-700 text-slate-900 rounded-xl font-bold py-2 px-4 focus:outline-none focus:shadow-outline mb-4"
-        >
-          Auto Generate Content
-        </button>
-        <fieldset className="w-full space-y-1 dark:text-gray-800">
-          <label
-            htmlFor="files"
-            className="block text-slate-800 font-bold mb-2"
-          >
-            Attachments:
-          </label>
-          <div className="flex">
-            <input
-              type="file"
-              name="files"
-              id="files"
-              className="px-1 py-1 border-2 border-dashed rounded-md font-bold dark:border-gray-300 dark:text-gray-800 dark:bg-gray-500"
-              onChange={handleImageChange} // Assuming handleImageChange is defined elsewhere
-              accept="image/*"
-              required
-            />
-          </div>
-        </fieldset>
-        <br></br>
 
+        {/* Submit Button */}
         <button
           type="submit"
-          className="bg-blue-500 rounded-xl hover:bg-blue-700 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
-          disabled={loading} // Disable button when loading
+          className="w-full bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold py-3 px-4 rounded-lg shadow-lg transition-all"
+          disabled={loading}
         >
           {loading ? (
-            <div role="status">
+            <div className="flex items-center justify-center">
               <svg
                 aria-hidden="true"
-                className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                className="w-6 h-6 mr-2 text-gray-200 animate-spin dark:text-gray-400 fill-white"
                 viewBox="0 0 100 101"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  d="M100 50.5908C100 78.2051 77.6142 100.591..."
                   fill="currentColor"
                 />
-                <path
-                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                  fill="currentFill"
-                />
               </svg>
-              <span className="sr-only">Loading...</span>
+              Creating...
             </div>
           ) : (
-            "Create Post"
+            "🚀 Create Post"
           )}
         </button>
       </form>
-      <ToastContainer />
+      <ToastContainer position="top-right" theme="dark" autoClose={2000} />
     </div>
   );
 };
